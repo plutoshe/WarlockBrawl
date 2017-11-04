@@ -256,7 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 451411074}
   - component: {fileID: 451411077}
-  - component: {fileID: 451411076}
+  - component: {fileID: 451411075}
   m_Layer: 12
   m_Name: CameraLimitation
   m_TagString: Untagged
@@ -277,7 +277,7 @@ Transform:
   m_Father: {fileID: 1691761599}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!64 &451411076
+--- !u!64 &451411075
 MeshCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -287,7 +287,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 838579841}
   - component: {fileID: 838579846}
   - component: {fileID: 838579848}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
