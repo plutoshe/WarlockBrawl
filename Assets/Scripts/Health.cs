@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class Health : MonoBehaviour {
+public class Health : NetworkBehaviour {
 
 	public const int maxHealth = 100;
-	public int currentHealth = maxHealth;
 	public int DamagePerSecond = 0;
-	public RectTransform healthBar;
 	private float waitTime = 0f;
 	private float incrementTime = 1f;
+
+
+	[SyncVar(hook = "OnChangeHealth")]
+	public int currentHealth = maxHealth;
+
+	public RectTransform healthBar;
+
 
 	public void AlterDamgePerSecond(int damage) {
 		DamagePerSecond = damage;
@@ -17,6 +24,10 @@ public class Health : MonoBehaviour {
 
 	}
 	public void TakeDamage(int amount) {
+		if (!isServer)
+		{
+			return;
+		}
 		currentHealth -= amount;
 		if (currentHealth <= 0)
 		{
@@ -27,13 +38,16 @@ public class Health : MonoBehaviour {
 	}
 
 	void Update() {
-		
 		waitTime+=Time.deltaTime;
 		while(waitTime>incrementTime)
 		{
 			waitTime-=incrementTime;
 			currentHealth -= DamagePerSecond;
 		}
+	}
+
+	void OnChangeHealth (int currentHealth)
+	{
 		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
 }

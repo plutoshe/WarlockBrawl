@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 198160785849377120}
   - component: {fileID: 199003555036422288}
   - component: {fileID: 54152737603356578}
+  - component: {fileID: 136873841435805644}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -88,6 +89,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &136873841435805644
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059758851325416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.12
+  m_Height: 1.65
+  m_Direction: 0
+  m_Center: {x: 0.44, y: -0.01, z: 0.14}
 --- !u!198 &198160785849377120
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerShooting : MonoBehaviour
+public class PlayerShooting : NetworkBehaviour
 {	
 	public GameObject FireballPrefab;
 	public Transform SkillSpawn;
@@ -8,7 +9,6 @@ public class PlayerShooting : MonoBehaviour
 	public float FireballWait = 2.0f;
 	void ShootFireball() {
 		
-
 		var fireball = (GameObject)Instantiate (
 			FireballPrefab,
 			SkillSpawn.position,
@@ -23,6 +23,9 @@ public class PlayerShooting : MonoBehaviour
 	}
 	void Update () {
 		FireballWait += Time.deltaTime;
+		if (!isLocalPlayer) {
+			return;
+		}
 		if (Input.GetKeyDown (KeyCode.Q) & FireballWait >= FireballInterval) {
 			FireballWait = 0;
 			ShootFireball();

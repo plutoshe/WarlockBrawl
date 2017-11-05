@@ -22,7 +22,7 @@ public class CameraFollow : MonoBehaviour
 //		transform.position = Vector3.Lerp (transform.position, targetCamPos, smoothing * Time.deltaTime);
 //	}
 	public float speed;   
-	public Transform target;
+	private Transform target;
 //	public Transform limitSpace;
 
 	Vector3 offset;
@@ -40,11 +40,16 @@ public class CameraFollow : MonoBehaviour
 //	int floorMask;
 	int cameraMask;
 
-	void Start () { 
-		offset = transform.position - target.position;
-//		floorMask = LayerMask.GetMask ("Floor");
+	void Start() {
 		cameraMask = LayerMask.GetMask ("Camera");
+		target = transform;
 	}  
+
+	public void SetTarget(Transform target_) {
+		transform.position = new Vector3 (0, 15, -30);
+		offset = transform.position - target_.position;
+		target = target_;
+	}
 
 	void Update() {
 		var msPos = Input.mousePosition;  
