@@ -20,21 +20,16 @@ public class ClickToMove : NetworkBehaviour {
 	public Material LocalMaterial;
 	// Use this for initialization
 
-	public void Awake() {
+//	public void Awake() {
+//		
+//	}
+		
+	public override void OnStartLocalPlayer()
+	{
 		anim = GetComponent<Animator> ();
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
-	}
-		
-
-
-	void Start() {
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (transform);
-//		GetComponent<SkinnedMeshRenderer>().material = LocalMaterial;
-//		GetComponent<MeshRenderer> ().material.color = Color.blue;
-	}
-	public override void OnStartLocalPlayer()
-	{
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{
@@ -58,16 +53,7 @@ public class ClickToMove : NetworkBehaviour {
 		{
 			if (Physics.Raycast(ray, out hit, 100))
 			{
-//					if (hit.collider.CompareTag("Enemy"))
-//					{
-//						targetedEnemy = hit.transform;
-//						enemyClicked = true;
-//					}
-//
-//					else
-//					{
-//						
-//					}
+
 				walking = true;
 //					enemyClicked = false;
 				navMeshAgent.destination = hit.point;
@@ -75,11 +61,7 @@ public class ClickToMove : NetworkBehaviour {
 //					navMeshAgent.isStopped (false);
 			}
 		}
-
-//			if (enemyClicked) {
-//				MoveAndShoot();
-//			}
-//
+			
 		if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance) {
 			if (!navMeshAgent.hasPath || Mathf.Abs (navMeshAgent.velocity.sqrMagnitude) < float.Epsilon)
 				walking = false;
@@ -90,30 +72,7 @@ public class ClickToMove : NetworkBehaviour {
 		anim.SetBool ("IsWalking", walking);
 	}
 
-//		private void MoveAndShoot()
-//		{
-//			if (targetedEnemy == null)
-//				return;
-//			navMeshAgent.destination = targetedEnemy.position;
-//			if (navMeshAgent.remainingDistance >= shootDistance) {
-//
-//				navMeshAgent.Resume();
-//				walking = true;
-//			}
-//
-//			if (navMeshAgent.remainingDistance <= shootDistance) {
-//
-//				transform.LookAt(targetedEnemy);
-//				Vector3 dirToShoot = targetedEnemy.transform.position - transform.position;
-//				if (Time.time > nextFire)
-//				{
-//					nextFire = Time.time + shootRate;
-//					//shootingScript.Shoot(dirToShoot);
-//				}
-//				navMeshAgent.Stop();
-//				walking = false;
-//			}
-//		}
+
 
 }
 

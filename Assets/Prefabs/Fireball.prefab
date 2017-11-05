@@ -23,6 +23,9 @@ GameObject:
   - component: {fileID: 199003555036422288}
   - component: {fileID: 54152737603356578}
   - component: {fileID: 136873841435805644}
+  - component: {fileID: 114645227372580608}
+  - component: {fileID: 114098209412274174}
+  - component: {fileID: 114813217728476808}
   m_Layer: 0
   m_Name: Fireball
   m_TagString: Untagged
@@ -53,27 +56,27 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1692068330800098}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.637, y: -0.012, z: 0.53}
-  m_LocalScale: {x: 0.67, y: 0.43, z: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4946919979568796}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4946919979568796
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1059758851325416}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
-  m_LocalPosition: {x: 0.53, y: 0.5, z: 1.96}
-  m_LocalScale: {x: 0.83, y: 1.67, z: 0.61}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4232327463247730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!54 &54152737603356578
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -89,6 +92,70 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114098209412274174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059758851325416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.5
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114645227372580608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059758851325416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 33
+    i1: 133
+    i2: 245
+    i3: 16
+    i4: 245
+    i5: 157
+    i6: 36
+    i7: 179
+    i8: 219
+    i9: 156
+    i10: 19
+    i11: 31
+    i12: 239
+    i13: 240
+    i14: 104
+    i15: 123
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114813217728476808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1059758851325416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa42ebc81e6534e3b818f436112e5c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136873841435805644
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -98,10 +165,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.12
-  m_Height: 1.65
-  m_Direction: 0
-  m_Center: {x: 0.44, y: -0.01, z: 0.14}
+  m_Radius: 0.43
+  m_Height: 0
+  m_Direction: 2
+  m_Center: {x: 0.01, y: -0.02, z: -0.29}
 --- !u!198 &198160785849377120
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -161,14 +228,14 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1792138745
+  randomSeed: 924158847
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 8
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -209,7 +276,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -436,7 +503,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.11519173
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -477,7 +544,7 @@ ParticleSystem:
     startRotationY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.17104226
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -518,7 +585,7 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.17453292
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -559,7 +626,7 @@ ParticleSystem:
     randomizeRotationDirection: 0
     maxNumParticles: 1000
     size3D: 0
-    rotation3D: 1
+    rotation3D: 0
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
@@ -929,7 +996,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -3423,7 +3490,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -588188159
+  randomSeed: 1202374495
   InitialModule:
     serializedVersion: 3
     enabled: 1

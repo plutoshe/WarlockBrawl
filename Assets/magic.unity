@@ -108,22 +108,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 23800000, guid: fc308dba55b18455ca3953ddd2e4cae5, type: 2}
---- !u!1 &83713277 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1059758851325416, guid: 2185f510f59d24b3db9c131feff0687b,
-    type: 2}
-  m_PrefabInternal: {fileID: 599581267}
---- !u!114 &83713278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 83713277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa42ebc81e6534e3b818f436112e5c5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &451411073
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,48 +224,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1001 &599581267
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.53
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 1.96
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4946919979568796, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &838579840
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +743,8 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: 
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1059758851325416, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -844,7 +787,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1

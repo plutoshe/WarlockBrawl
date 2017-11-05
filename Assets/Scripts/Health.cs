@@ -34,7 +34,8 @@ public class Health : NetworkBehaviour {
 			currentHealth = 0;
 			Debug.Log("Dead!");
 		}
-		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
+//		OnChangeHealth (currentHealth);
+//			new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
 
 	void Update() {
@@ -43,6 +44,7 @@ public class Health : NetworkBehaviour {
 		{
 			waitTime-=incrementTime;
 			currentHealth -= DamagePerSecond;
+//			OnChangeHealth (currentHealth);
 		}
 	}
 
