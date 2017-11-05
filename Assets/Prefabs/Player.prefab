@@ -324,6 +324,9 @@ MonoBehaviour:
   SkillSpawn: {fileID: 4236258072227654}
   FireballInterval: 2
   FireballWait: 2
+  cursorTexture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  cursorMode: 0
+  hotSpot: {x: 0, y: 0}
 --- !u!114 &114312754279480312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -467,7 +470,6 @@ MonoBehaviour:
   MaxHealth: 100
   shootDistance: 10
   shootRate: 0.5
-  shootingScript: {fileID: 0}
   LocalMaterial: {fileID: 2100000, guid: 666dc86baf7b04f3fbf88a3f28bc307d, type: 2}
 --- !u!114 &114968110776949364
 MonoBehaviour:

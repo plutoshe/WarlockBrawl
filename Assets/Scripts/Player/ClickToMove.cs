@@ -7,22 +7,18 @@ public class ClickToMove : NetworkBehaviour {
 	private int currentHealth;
 	public float shootDistance = 10f;
 	public float shootRate = .5f;
-	public PlayerShooting shootingScript;
 
 	private Animator anim;
 	private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+
 	private Transform targetedEnemy;
 	private Ray shootRay;
 	private RaycastHit shootHit;
 	private bool walking;
-//		private bool enemyClicked;
 	private float nextFire;
 	public Material LocalMaterial;
-	// Use this for initialization
 
-//	public void Awake() {
-//		
-//	}
 		
 	public override void OnStartLocalPlayer()
 	{
