@@ -5,12 +5,15 @@ using UnityEngine.UI;
 public class PlayerShooting : NetworkBehaviour
 {	
 	public GameObject FireballPrefab;
+	private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
 	public Transform SkillSpawn;
 	public float[] SkillInterval = {2.0f, 2.0f, 2.0f, 2.0f};
 	private float[] SkillWait;
 	private float SkillLastWait;
 	private int SkillSelect = -1;
 
+	public float BlinkRadius = 6.0f;
 	public Texture2D cursorTexture;
 	public CursorMode cursorMode = CursorMode.Auto;
 	public Vector2 hotSpot = Vector2.zero;
@@ -47,6 +50,7 @@ public class PlayerShooting : NetworkBehaviour
 		}
 		SkillWait = new float[SkillInterval.Length];
 		SkillInterval.CopyTo (SkillWait, 0);
+		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 	}
 
 	void SkillTrigger(int i) {
@@ -79,12 +83,25 @@ public class PlayerShooting : NetworkBehaviour
 					transform.rotation = Quaternion.LookRotation (targetDir);
 					CmdShootFireball ();
 				}
+				if (SkillSelect == 2) {
+					Vector3 targetDir = hit.point - transform.position; 
+					transform.rotation = Quaternion.LookRotation (targetDir);
+
+					if (Vector3.Distance (hit.point, transform.position) > BlinkRadius) {
+						targetDir = targetDir.normalized * BlinkRadius;
+					}
+					transform.position += targetDir;
+					navMeshAgent.destination = transform.position;
+				}
 				SkillSelect = -1;
 			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.Q)) {
 			AbilityList[0].onClick.Invoke();
+		}
+		if (Input.GetKeyDown (KeyCode.E)) {
+			AbilityList[2].onClick.Invoke();
 		}
 	}
 }

@@ -51,10 +51,9 @@ public class ClickToMove : NetworkBehaviour {
 			{
 
 				walking = true;
-//					enemyClicked = false;
 				navMeshAgent.destination = hit.point;
-				navMeshAgent.Resume();
-//					navMeshAgent.isStopped (false);
+				navMeshAgent.isStopped  = false;
+
 			}
 		}
 			
