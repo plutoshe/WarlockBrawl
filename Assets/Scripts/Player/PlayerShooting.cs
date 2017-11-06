@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerShooting : NetworkBehaviour
 {	
 	public GameObject FireballPrefab;
 	public Transform SkillSpawn;
-	public float FireballInterval = 2.0f;
-	public float FireballWait = 2.0f;
-	private bool SkillSelect = false;
+	public float[] SkillInterval = {2.0f, 2.0f, 2.0f, 2.0f};
+	private float[] SkillWait;
+	private float SkillLastWait;
+	private int SkillSelect = -1;
 
 	public Texture2D cursorTexture;
 	public CursorMode cursorMode = CursorMode.Auto;
 	public Vector2 hotSpot = Vector2.zero;
+	public Button[] AbilityList;
 
 
 	// This [Command] code is called on the Client …
@@ -20,7 +23,6 @@ public class PlayerShooting : NetworkBehaviour
 	void CmdShootFireball() {
 
 		//		var gotoRotation = Quaternion.FromToRotation(transform.rotation, hit.
-
 
 		var fireball = (GameObject)Instantiate (
 			FireballPrefab,
@@ -37,9 +39,26 @@ public class PlayerShooting : NetworkBehaviour
 		Destroy(fireball, 8.0f);
 	}
 
+	void Start() {
+		for (var i = 0; i < AbilityList.Length; i++) {
+			var j = i;
+//			AbilityList [i].onClick.AddListener (() => SkillTrigger(i));
+			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(j);	});
+		}
+		SkillWait = new float[SkillInterval.Length];
+		SkillInterval.CopyTo (SkillWait, 0);
+	}
+
+	void SkillTrigger(int i) {
+		if (SkillWait [i] + SkillLastWait >= SkillInterval [i]) {
+			SkillSelect = i;
+			Cursor.SetCursor (cursorTexture, hotSpot, cursorMode);
+		}
+	}
+
 	void Update () {
 
-		FireballWait += Time.deltaTime;
+		SkillLastWait += Time.deltaTime;
 		if (!isLocalPlayer) {
 			return;
 		}
@@ -47,22 +66,25 @@ public class PlayerShooting : NetworkBehaviour
 		RaycastHit hit;
 
 
-		if (Input.GetButtonDown ("Fire1") && SkillSelect) {
+		if (Input.GetButtonDown ("Fire1") && SkillSelect >= 0) {
 			if (Physics.Raycast(ray, out hit, 100)) {
 				Cursor.SetCursor(null, Vector2.zero, cursorMode);
-				FireballWait = 0;	
-				SkillSelect = false;
-				Vector3 targetDir = hit.point - transform.position; 
-				transform.rotation = Quaternion.LookRotation(targetDir);
-				CmdShootFireball ();
+				for (int i = 0; i < SkillWait.Length; i++) {
+					SkillWait[i] += SkillLastWait;
+				}
+				SkillWait [SkillSelect] = 0;
+				SkillLastWait = 0;
+				if (SkillSelect == 0) {
+					Vector3 targetDir = hit.point - transform.position; 
+					transform.rotation = Quaternion.LookRotation (targetDir);
+					CmdShootFireball ();
+				}
+				SkillSelect = -1;
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Q) && FireballWait >= FireballInterval) {
-			Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
-			SkillSelect = true;
+		if (Input.GetKeyDown (KeyCode.Q)) {
+			AbilityList[0].onClick.Invoke();
 		}
-
-
 	}
 }
