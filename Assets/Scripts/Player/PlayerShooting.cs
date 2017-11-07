@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PlayerShooting : NetworkBehaviour
 {	
 	public GameObject FireballPrefab;
+	public GameObject PutballPrefab;
 	private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
 	public Transform SkillSpawn;
@@ -18,7 +19,6 @@ public class PlayerShooting : NetworkBehaviour
 	public CursorMode cursorMode = CursorMode.Auto;
 	public Vector2 hotSpot = Vector2.zero;
 	public Button[] AbilityList;
-
 
 	// This [Command] code is called on the Client …
 	// … but it is run on the Server!
@@ -35,11 +35,23 @@ public class PlayerShooting : NetworkBehaviour
 
 		//		Quaternion.RotateTowards
 		// Add velocity to the bullet
-		fireball.GetComponent<Rigidbody>().velocity = fireball.transform.forward * 8;
+		fireball.GetComponent<Rigidbody>().velocity = fireball.transform.forward.normalized * 8;
 
-		NetworkServer.Spawn(fireball);
+//		NetworkServer.Spawn(fireball);
 		// Destroy the bullet after 2 seconds
 		Destroy(fireball, 8.0f);
+	}
+
+	[Command]
+	void CmdShootPutball() {
+		var putball = (GameObject)Instantiate (
+			PutballPrefab,
+			SkillSpawn.position,
+			SkillSpawn.rotation);
+//		putball.GetComponent<ParticleSystem>().startRotation3D = SkillSpawn.rotation;
+		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 3;
+//		NetworkServer.Spawn(putball);
+		Destroy(putball, 8.0f);
 	}
 
 	void Start() {
@@ -56,7 +68,9 @@ public class PlayerShooting : NetworkBehaviour
 	void SkillTrigger(int i) {
 		if (SkillWait [i] + SkillLastWait >= SkillInterval [i]) {
 			SkillSelect = i;
-			Cursor.SetCursor (cursorTexture, hotSpot, cursorMode);
+			if (i != 3) { // Defend is a non directive ability
+				Cursor.SetCursor (cursorTexture, hotSpot, cursorMode);
+			}
 		}
 	}
 
@@ -70,7 +84,7 @@ public class PlayerShooting : NetworkBehaviour
 		RaycastHit hit;
 
 
-		if (Input.GetButtonDown ("Fire1") && SkillSelect >= 0) {
+		if (SkillSelect == 3 || (Input.GetButtonDown ("Fire1") && SkillSelect >= 0)) {
 			if (Physics.Raycast(ray, out hit, 100)) {
 				Cursor.SetCursor(null, Vector2.zero, cursorMode);
 				for (int i = 0; i < SkillWait.Length; i++) {
@@ -83,6 +97,11 @@ public class PlayerShooting : NetworkBehaviour
 					transform.rotation = Quaternion.LookRotation (targetDir);
 					CmdShootFireball ();
 				}
+				if (SkillSelect == 1) {
+					Vector3 targetDir = hit.point - transform.position; 
+					transform.rotation = Quaternion.LookRotation (targetDir);
+					CmdShootPutball ();
+				}
 				if (SkillSelect == 2) {
 					Vector3 targetDir = hit.point - transform.position; 
 					transform.rotation = Quaternion.LookRotation (targetDir);
@@ -91,7 +110,11 @@ public class PlayerShooting : NetworkBehaviour
 						targetDir = targetDir.normalized * BlinkRadius;
 					}
 					transform.position += targetDir;
-					navMeshAgent.destination = transform.position;
+					navMeshAgent.isStopped = true;
+//					navMeshAgent.destination = transform.position;
+				}
+				if (SkillSelect == 3) {
+					
 				}
 				SkillSelect = -1;
 			}
@@ -99,6 +122,9 @@ public class PlayerShooting : NetworkBehaviour
 
 		if (Input.GetKeyDown (KeyCode.Q)) {
 			AbilityList[0].onClick.Invoke();
+		}
+		if (Input.GetKeyDown (KeyCode.W)) {
+			AbilityList[1].onClick.Invoke();
 		}
 		if (Input.GetKeyDown (KeyCode.E)) {
 			AbilityList[2].onClick.Invoke();

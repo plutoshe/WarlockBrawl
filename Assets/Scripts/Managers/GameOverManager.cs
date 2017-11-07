@@ -2,7 +2,7 @@
 
 public class GameOverManager : MonoBehaviour
 {
-    public PlayerHealth playerHealth;
+    public Health playerHealth;
 
 
     Animator anim;

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
-public class ClickToMove : NetworkBehaviour {
+public class Movement : NetworkBehaviour {
+	public bool Debug = true;
 	public int MaxHealth;
 	private int currentHealth;
 	public float shootDistance = 10f;
 	public float shootRate = .5f;
+	private Rigidbody rb;
+
 
 	private Animator anim;
 	private UnityEngine.AI.NavMeshAgent navMeshAgent;
@@ -18,11 +22,26 @@ public class ClickToMove : NetworkBehaviour {
 	private bool walking;
 	private float nextFire;
 	public Material LocalMaterial;
+	public Canvas FollowCanvas;
 
+	// put force setting
+//	public float radius = 5.0F;
+//	public float power = 300.0F;
 		
 	public override void OnStartLocalPlayer()
 	{
 		anim = GetComponent<Animator> ();
+		rb = GetComponent<Rigidbody> ();
+
+//		Vector3 explosionPos = new Vector3(0,0,0);
+//		Collider[] objectsInRange = Physics.OverlapSphere(explosionPos, radius);
+//		foreach (var i in objectsInRange) {
+//			Debug.Log(i.name);
+//		}
+//			transform.position;
+
+//		rb.AddExplosionForce(power, explosionPos, radius, 0, ForceMode.Impulse);
+//		Lerp
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (transform);
@@ -37,12 +56,17 @@ public class ClickToMove : NetworkBehaviour {
 
 	}
 
+//	void AddForce() {
+//		rb.AddForce(, ForceMode.Impulse);
+//	}
+
 	// Update is called once per frame
 	void Update() 
 	{
 		if (!isLocalPlayer) {
 			return;
 		}
+
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 		if (Input.GetButtonDown ("Fire2")) 
@@ -56,18 +80,26 @@ public class ClickToMove : NetworkBehaviour {
 
 			}
 		}
-			
-		if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance) {
+		if (navMeshAgent.isStopped)
+			walking = false;
+		else if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance) {
 			if (!navMeshAgent.hasPath || Mathf.Abs (navMeshAgent.velocity.sqrMagnitude) < float.Epsilon)
 				walking = false;
 		} else {
 			walking = true;
 		}
-
+		if (Debug && Input.GetKeyDown(KeyCode.Space)) {
+			var force = transform.forward.normalized * 30;
+			rb.AddForce (force, ForceMode.Impulse);
+			navMeshAgent.isStopped = true;
+		}
 		anim.SetBool ("IsWalking", walking);
 	}
 
-
+	public void Impluse(Vector3 force) {
+		rb.AddForce (force, ForceMode.Impulse);
+		navMeshAgent.isStopped = true;
+	}
 
 }
 

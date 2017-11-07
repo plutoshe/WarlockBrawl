@@ -23,6 +23,7 @@ public class Health : NetworkBehaviour {
 		waitTime = 0f;
 
 	}
+
 	public void TakeDamage(int amount) {
 		if (!isServer)
 		{
@@ -34,8 +35,6 @@ public class Health : NetworkBehaviour {
 			currentHealth = 0;
 			Debug.Log("Dead!");
 		}
-//		OnChangeHealth (currentHealth);
-//			new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
 
 	void Update() {
