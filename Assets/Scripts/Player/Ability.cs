@@ -12,6 +12,7 @@ public class Ability : NetworkBehaviour
 
 	public Transform SkillSpawn;
 	public float[] SkillInterval = {2.0f, 2.0f, 2.0f, 2.0f};
+	public Image[] AbilityCountdown;
 	private float[] SkillWait;
 	private float SkillLastWait;
 	private int SkillSelect = -1;
@@ -70,7 +71,6 @@ public class Ability : NetworkBehaviour
 	}
 
 	void Start() {
-		Debug.Log("Update " + gameObject.GetInstanceID ());
 		for (var i = 0; i < AbilityList.Length; i++) {
 			var j = i;
 //			AbilityList [i].onClick.AddListener (() => SkillTrigger(i));
@@ -80,8 +80,7 @@ public class Ability : NetworkBehaviour
 		SkillInterval.CopyTo (SkillWait, 0);
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		ManaShield.SetActive (false);
-//		var ballLayer = LayerMask.GetMask ("Ball");
-//		Physics.IgnoreLayerCollision (ballLayer, ballLayer);
+
 	}
 
 	void SkillTrigger(int i) {
@@ -100,7 +99,13 @@ public class Ability : NetworkBehaviour
 		if (!isLocalPlayer) {
 			return;
 		}
-		if (ManaShield.active)
+		for (int i = 0; i < AbilityCountdown.Length; i++) {
+			if  (ManaShield.activeSelf) 
+				AbilityCountdown [i].fillAmount = 1;
+			else 
+				AbilityCountdown [i].fillAmount = (SkillInterval [i] - SkillLastWait - SkillWait [i]) / SkillInterval [i];
+		}
+		if (ManaShield.activeSelf)
 			return;
 		
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
