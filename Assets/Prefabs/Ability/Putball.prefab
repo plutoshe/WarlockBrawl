@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 54289300439323630}
   - component: {fileID: 136284834908438334}
   - component: {fileID: 114141846184171720}
+  - component: {fileID: 114051365284513090}
   m_Layer: 13
   m_Name: Putball
   m_TagString: Untagged
@@ -59,6 +60,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114051365284513090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398007142293884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 170
+    i1: 206
+    i2: 58
+    i3: 15
+    i4: 209
+    i5: 147
+    i6: 148
+    i7: 95
+    i8: 41
+    i9: 199
+    i10: 52
+    i11: 152
+    i12: 150
+    i13: 18
+    i14: 250
+    i15: 45
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114141846184171720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,7 +175,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 715185290
+  randomSeed: 996323014
   InitialModule:
     serializedVersion: 3
     enabled: 1
