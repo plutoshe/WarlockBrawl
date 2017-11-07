@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 136873841435805644}
   - component: {fileID: 114813217728476808}
   - component: {fileID: 114428085041552794}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4232327463247730}
   - component: {fileID: 198672200807850526}
   - component: {fileID: 199073739603522018}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: BackFire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1059758851325416}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4232327463247730}
@@ -141,7 +141,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1059758851325416}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.43
   m_Height: 0
@@ -206,7 +206,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1563380658
+  randomSeed: 450669183
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3468,7 +3468,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 269626107
+  randomSeed: 1213913116
   InitialModule:
     serializedVersion: 3
     enabled: 1

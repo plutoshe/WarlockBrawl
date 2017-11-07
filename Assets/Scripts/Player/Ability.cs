@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System.Collections;
 
-public class PlayerShooting : NetworkBehaviour
+public class Ability : NetworkBehaviour
 {	
 	public GameObject FireballPrefab;
 	public GameObject PutballPrefab;
+	public GameObject ManaShield;
 	private UnityEngine.AI.NavMeshAgent navMeshAgent;
 
 	public Transform SkillSpawn;
@@ -36,8 +38,7 @@ public class PlayerShooting : NetworkBehaviour
 		//		Quaternion.RotateTowards
 		// Add velocity to the bullet
 		fireball.GetComponent<Rigidbody>().velocity = fireball.transform.forward.normalized * 8;
-
-//		NetworkServer.Spawn(fireball);
+		NetworkServer.Spawn(fireball);
 		// Destroy the bullet after 2 seconds
 		Destroy(fireball, 8.0f);
 	}
@@ -45,16 +46,31 @@ public class PlayerShooting : NetworkBehaviour
 	[Command]
 	void CmdShootPutball() {
 		var putball = (GameObject)Instantiate (
-			PutballPrefab,
-			SkillSpawn.position,
+            PutballPrefab,
+            SkillSpawn.position,
 			SkillSpawn.rotation);
+		
 //		putball.GetComponent<ParticleSystem>().startRotation3D = SkillSpawn.rotation;
 		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 3;
-//		NetworkServer.Spawn(putball);
+//		Debug.Log("!!!" + transform.parent.GetInstanceID ());
+
+		NetworkServer.Spawn(putball);
 		Destroy(putball, 8.0f);
 	}
 
+	[Command] 
+	void CmdManaShield() {
+		ManaShield.gameObject.SetActive (true);
+		StartCoroutine (ManaShieldFade (0.5f));
+	}
+
+	IEnumerator ManaShieldFade(float waitTime) {
+		yield return new WaitForSeconds (waitTime);
+		ManaShield.gameObject.SetActive (false);
+	}
+
 	void Start() {
+		Debug.Log("Update " + gameObject.GetInstanceID ());
 		for (var i = 0; i < AbilityList.Length; i++) {
 			var j = i;
 //			AbilityList [i].onClick.AddListener (() => SkillTrigger(i));
@@ -63,6 +79,9 @@ public class PlayerShooting : NetworkBehaviour
 		SkillWait = new float[SkillInterval.Length];
 		SkillInterval.CopyTo (SkillWait, 0);
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
+		ManaShield.SetActive (false);
+//		var ballLayer = LayerMask.GetMask ("Ball");
+//		Physics.IgnoreLayerCollision (ballLayer, ballLayer);
 	}
 
 	void SkillTrigger(int i) {
@@ -75,20 +94,24 @@ public class PlayerShooting : NetworkBehaviour
 	}
 
 	void Update () {
-
+		
+//		Debug.Log("Update " + gameObject.GetInstanceID ());
 		SkillLastWait += Time.deltaTime;
 		if (!isLocalPlayer) {
 			return;
 		}
+		if (ManaShield.active)
+			return;
+		
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 		RaycastHit hit;
 
 
 		if (SkillSelect == 3 || (Input.GetButtonDown ("Fire1") && SkillSelect >= 0)) {
-			if (Physics.Raycast(ray, out hit, 100)) {
-				Cursor.SetCursor(null, Vector2.zero, cursorMode);
+			if (Physics.Raycast (ray, out hit, 100)) {
+				Cursor.SetCursor (null, Vector2.zero, cursorMode);
 				for (int i = 0; i < SkillWait.Length; i++) {
-					SkillWait[i] += SkillLastWait;
+					SkillWait [i] += SkillLastWait;
 				}
 				SkillWait [SkillSelect] = 0;
 				SkillLastWait = 0;
@@ -114,20 +137,26 @@ public class PlayerShooting : NetworkBehaviour
 //					navMeshAgent.destination = transform.position;
 				}
 				if (SkillSelect == 3) {
-					
+					CmdManaShield ();
 				}
 				SkillSelect = -1;
 			}
-		}
-
+		} 
 		if (Input.GetKeyDown (KeyCode.Q)) {
-			AbilityList[0].onClick.Invoke();
-		}
+			AbilityList [0].onClick.Invoke ();
+		} 
 		if (Input.GetKeyDown (KeyCode.W)) {
-			AbilityList[1].onClick.Invoke();
-		}
+			AbilityList [1].onClick.Invoke ();
+		} 
 		if (Input.GetKeyDown (KeyCode.E)) {
-			AbilityList[2].onClick.Invoke();
+			AbilityList [2].onClick.Invoke ();
+		} 
+		if (Input.GetKeyDown (KeyCode.R)) {
+			AbilityList [3].onClick.Invoke ();
+		} 
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			Cursor.SetCursor (null, Vector2.zero, cursorMode);
+			SkillSelect = -1;
 		}
 	}
 }
