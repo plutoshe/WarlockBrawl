@@ -13,7 +13,7 @@ public class Movement : NetworkBehaviour {
 
 
 	private Animator anim;
-	private UnityEngine.AI.NavMeshAgent navMeshAgent;
+	public UnityEngine.AI.NavMeshAgent navMeshAgent;
 
 
 	private Transform targetedEnemy;

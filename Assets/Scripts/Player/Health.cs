@@ -55,19 +55,22 @@ public class Health : NetworkBehaviour {
 			waitTime-=incrementTime;
 			currentHealth -= DamagePerSecond;
 		}
-
+		if (Input.GetKeyDown(KeyCode.Alpha0)) {
+			currentHealth = 0;
+		}
 		if (!isDead && currentHealth <= 0)
 		{
 			isDead = true;
 			movement.enabled = false;
 			ability.enabled = false;
+			movement.navMeshAgent.isStopped = true;
 			anim.SetTrigger ("Die");
 			currentHealth = 0;
 			Debug.Log("Dead!");
 			if (HealthNum <= 0) {
 			} else {
 				HealthNum--;
-				StartCoroutine (Finale (2f));
+				StartCoroutine (Finale (5f));
 			}
 
 		}
@@ -81,11 +84,22 @@ public class Health : NetworkBehaviour {
 	IEnumerator Finale(float waitTime) {
 
 		yield return new WaitForSeconds (waitTime);
-		anim.SetTrigger ("Respawn");
-		yield return new WaitForSeconds (0.5f);
-		movement.enabled = true;
-		movement.enabled = true;
-		isDead = false;
-		currentHealth = 100;
+
+		RpcRespawn ();
+	}
+
+	[ClientRpc]
+	void RpcRespawn()
+	{
+		if (isLocalPlayer)
+		{	
+			movement.enabled = true;
+			ability.enabled = true;
+			isDead = false;
+			anim.SetTrigger ("Respawn");
+			currentHealth = 100;
+			// move back to zero location
+			transform.position = Vector3.zero;
+		}
 	}
 }
