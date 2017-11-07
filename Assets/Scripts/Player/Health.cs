@@ -99,7 +99,16 @@ public class Health : NetworkBehaviour {
 			anim.SetTrigger ("Respawn");
 			currentHealth = 100;
 			// move back to zero location
-			transform.position = Vector3.zero;
+//			transform.position = Vector3.zero;
+			var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
+			var angle = Random.Range (0, 360) * Mathf.PI / 180;
+			var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
+
+			var z = x * Mathf.Sin (angle);
+			x = x * Mathf.Cos(angle);
+
+			transform.position = new Vector3 (x, 0, z);
+			Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 		}
 	}
 }

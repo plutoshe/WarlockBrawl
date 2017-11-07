@@ -810,6 +810,7 @@ MonoBehaviour:
   MaxHealth: 100
   shootDistance: 10
   shootRate: 0.5
+  navMeshAgent: {fileID: 0}
   LocalMaterial: {fileID: 2100000, guid: 666dc86baf7b04f3fbf88a3f28bc307d, type: 2}
   FollowCanvas: {fileID: 223867097097315092}
 --- !u!114 &114178649148456698
@@ -1343,6 +1344,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DamagePerSecond: 0
+  HealthNum: 2
+  movement: {fileID: 0}
+  ability: {fileID: 0}
+  anim: {fileID: 0}
   currentHealth: 100
   healthBar: {fileID: 224676370017831080}
 --- !u!114 &114968110776949364

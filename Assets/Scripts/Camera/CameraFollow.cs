@@ -51,11 +51,15 @@ public class CameraFollow : MonoBehaviour
 		target = target_;
 	}
 
+	public void FollowTarget() {
+		transform.position = target.position + offset;
+	}
+
 	void Update() {
 		var msPos = Input.mousePosition;  
 		if (Input.GetKeyDown (KeyCode.H)) {
 			// Create a postion the camera is aiming for based on the offset from the target.
-			transform.position = target.position + offset;
+			FollowTarget();
 	
 			// Smoothly interpolate between the camera's current position and it's target position.
 //			transform.position = targetCamPos;

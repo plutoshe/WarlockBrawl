@@ -42,6 +42,8 @@ public class Movement : NetworkBehaviour {
 
 //		rb.AddExplosionForce(power, explosionPos, radius, 0, ForceMode.Impulse);
 //		Lerp
+
+
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (transform);
@@ -52,7 +54,15 @@ public class Movement : NetworkBehaviour {
 				children.GetComponent<SkinnedMeshRenderer>().material = LocalMaterial;
 			}
 		}
+		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
+		var angle = Random.Range (0, 360) * Mathf.PI / 180;
+		var x = Random.Range (0, safeFloor.transform.localScale.x) / 2; 
 
+		var z = x * Mathf.Sin (angle);
+		x = x * Mathf.Cos(angle);
+
+		transform.position = new Vector3 (x, 0, z);
+		Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 
 	}
 
