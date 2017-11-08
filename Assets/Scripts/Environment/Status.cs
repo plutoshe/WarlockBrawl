@@ -15,7 +15,7 @@ public class Status: NetworkBehaviour {
 			int i = statusDemo.Count;
 			var children = (GameObject)Instantiate (statusItemPrefab);
 			children.transform.parent = gameObject.transform;
-			children.transform.localPosition = new Vector3 (0, 18.75f * i, 0);
+			children.transform.localPosition = new Vector3 (0, -18.75f * i, 0);
 			statusDemo.Add(children);
 				
 			
@@ -29,7 +29,9 @@ public class Status: NetworkBehaviour {
 				new KeyValuePair<string, Color>(status.playerName, status.playerColor), 
 				status.score + status.healthNum * 500));
 		}
-		statusList.Sort((pair1,pair2) => pair1.Value.CompareTo(pair2.Value));
+		statusList.Sort((pair1,pair2) => -pair1.Value.CompareTo(pair2.Value));
+
+
 
 		for (int i = 0; i < statusList.Count; i++) {
 			var textArr = statusDemo[i].GetComponentsInChildren<Text>();

@@ -950,7 +950,7 @@ MonoBehaviour:
   - {fileID: 114091935491217740}
   - {fileID: 114160494340481036}
   BlinkRadius: 6
-  cursorTexture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  cursorTexture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 3}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
   AbilityList:
@@ -1344,10 +1344,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  DamagePerSecond: 0
+  playerColor: {r: 0, g: 0, b: 1, a: 1}
   currentHealth: 100
-  HealthNum: 2
+  healthNum: 2
+  score: 0
   healthBar: {fileID: 224676370017831080}
+  DamagePerSecond: 0
 --- !u!114 &114968110776949364
 MonoBehaviour:
   m_ObjectHideFlags: 1

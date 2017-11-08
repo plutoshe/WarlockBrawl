@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class Movement : NetworkBehaviour {
-	public bool Debug = true;
+	public bool DebugMode = true;
 
 	public int MaxHealth;
 	private int currentHealth;
@@ -46,7 +46,8 @@ public class Movement : NetworkBehaviour {
 
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
-		Camera.main.GetComponent<CameraFollow> ().SetTarget (transform);
+		Debug.Log("Camera Focus");
+		Camera.main.GetComponent<CameraFollow> ().SetTarget (gameObject.transform);
 
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 		var angle = Random.Range (0, 360) * Mathf.PI / 180;
@@ -92,7 +93,7 @@ public class Movement : NetworkBehaviour {
 		} else {
 			walking = true;
 		}
-		if (Debug && Input.GetKeyDown(KeyCode.Space)) {
+		if (DebugMode && Input.GetKeyDown(KeyCode.Space)) {
 			var force = transform.forward.normalized * 30;
 			rb.AddForce (force, ForceMode.Impulse);
 			navMeshAgent.isStopped = true;

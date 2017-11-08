@@ -42,16 +42,15 @@ public class CameraFollow : MonoBehaviour
 
 	void Start() {
 		cameraMask = LayerMask.GetMask ("Camera");
-		target = transform;
 	}  
 
 	public void SetTarget(Transform target_) {
-		transform.position = new Vector3 (0, 15, -30);
 		offset = transform.position - target_.position;
 		target = target_;
 	}
 
 	public void FollowTarget() {
+		Debug.Log (target.position);
 		transform.position = target.position + offset;
 	}
 
