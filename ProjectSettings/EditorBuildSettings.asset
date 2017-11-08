@@ -8,3 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_CompletedAssets/Scenes/Level 01 5.x.unity
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/MagicLobbyManager.unity
+    guid: 545a1683f867a4ed89d7457a8d2f1e17
+  - enabled: 1
+    path: Assets/magic.unity
+    guid: 9cc2f9dcfb4474a24a634ec7011fdd01

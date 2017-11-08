@@ -11,9 +11,9 @@ public class Health : NetworkBehaviour {
 	private float waitTime = 0f;
 	private float incrementTime = 1f;
 	public int HealthNum = 2;
-	public Movement movement;
-	public Ability ability;
-	public Animator anim;
+	private Movement movement;
+	private Ability ability;
+	private Animator anim;
 	bool isDead = false;
 
 

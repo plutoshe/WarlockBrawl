@@ -73,7 +73,8 @@ public class CameraFollow : MonoBehaviour
 //		Debug.Log (limitSpace.localScale);
 		var x = 0.0f;   
 		var y = 0.0f;   
-		if (widthBorder <= msPos.x && msPos.x <= -widthBorder &&
+
+		if (widthBorder <= msPos.x && msPos.x <= Screen.width-widthBorder &&
 			   heightBorder <= msPos.y && msPos.y <= Screen.height - heightBorder) {  
 //			transform.Translate (x, y, y);   
 
@@ -109,6 +110,8 @@ public class CameraFollow : MonoBehaviour
 			Ray camRay = new Ray(transform.position + movement, transform.forward);
 			RaycastHit cameraHit;
 			Debug.DrawRay(camRay.origin, camRay.direction * 100, Color.yellow);
+//			int floorMask = LayerMask ("Floor");
+
 //			Debug.Log (Physics.Raycast (camRay, out cameraHit, 100, floorMask));
 
 			if (Physics.Raycast (camRay, out cameraHit, 1000, cameraMask)) {
