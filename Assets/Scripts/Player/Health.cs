@@ -4,28 +4,61 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class Health : NetworkBehaviour {
 
+public class Health : NetworkBehaviour {
+	// SynVar setting
+	[SyncVar]
+	public string playerName = "";
+	[SyncVar (hook = "OnChangeColor")]
+	public Color playerColor = Color.blue;
+	[SyncVar(hook = "OnChangeHealth")]
+	public int currentHealth = maxHealth;
+	[SyncVar]
+	public int healthNum = 2;
+	[SyncVar]
+	public int score = 0;
+
+	// Local status variables
+	public RectTransform healthBar;
 	public const int maxHealth = 100;
 	public int DamagePerSecond = 0;
+
+	// for Damage per second
 	private float waitTime = 0f;
 	private float incrementTime = 1f;
-	public int HealthNum = 2;
+
+	// for Score per interval
+	private float waitStatusTime = 0f;
+	private float incrementStatusTime = 10f;
+
+	// dead action setting
 	private Movement movement;
 	private Ability ability;
 	private Animator anim;
 	bool isDead = false;
 
-
-	[SyncVar(hook = "OnChangeHealth")]
-	public int currentHealth = maxHealth;
-
-	public RectTransform healthBar;
-
 	void Start() {
 		movement = GetComponent <Movement> ();
 		ability = GetComponent <Ability> ();
 		anim = GetComponent <Animator> ();
+
+		score = 0;
+	}
+
+	void OnChangeHealth (int currentHealth)
+	{
+		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
+	}
+
+	void OnChangeColor(Color color) {
+		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
+		foreach(var children in childrenMaterial)
+		{
+			if (children.name == "Player") {
+				children.GetComponent<SkinnedMeshRenderer>().material.color = playerColor;
+			}
+		}
+
 	}
 
 	public void AlterDamgePerSecond(int damage) {
@@ -48,13 +81,26 @@ public class Health : NetworkBehaviour {
 	}
 		
 
-	void Update() {
+	void Update() { //only local trigger
+		if (!isLocalPlayer) {
+			return;
+		}
+
+		// update damage per second
 		waitTime+=Time.deltaTime;
-		while(waitTime>incrementTime)
+		if (waitTime>=incrementTime) 
 		{
 			waitTime-=incrementTime;
 			currentHealth -= DamagePerSecond;
+
 		}
+		// update score
+		waitStatusTime += Time.deltaTime;
+		if (waitStatusTime >= incrementStatusTime) {
+			waitStatusTime -= incrementStatusTime;
+			score += currentHealth;
+		}
+
 		if (Input.GetKeyDown(KeyCode.Alpha0)) {
 			currentHealth = 0;
 		}
@@ -67,18 +113,13 @@ public class Health : NetworkBehaviour {
 			anim.SetTrigger ("Die");
 			currentHealth = 0;
 			Debug.Log("Dead!");
-			if (HealthNum <= 0) {
+			if (healthNum <= 0) {
 			} else {
-				HealthNum--;
+				healthNum--;
 				StartCoroutine (Finale (5f));
 			}
 
 		}
-	}
-
-	void OnChangeHealth (int currentHealth)
-	{
-		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
 
 	IEnumerator Finale(float waitTime) {
@@ -98,8 +139,6 @@ public class Health : NetworkBehaviour {
 			isDead = false;
 			anim.SetTrigger ("Respawn");
 			currentHealth = 100;
-			// move back to zero location
-//			transform.position = Vector3.zero;
 			var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 			var angle = Random.Range (0, 360) * Mathf.PI / 180;
 			var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
@@ -111,4 +150,5 @@ public class Health : NetworkBehaviour {
 			Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 		}
 	}
+		
 }

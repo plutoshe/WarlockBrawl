@@ -331,7 +331,10 @@ namespace Prototype.NetworkLobby
 
             if (_lobbyHooks)
                 _lobbyHooks.OnLobbyServerSceneLoadedForPlayer(this, lobbyPlayer, gamePlayer);
-
+			LobbyPlayer lobby = lobbyPlayer.GetComponent<LobbyPlayer>();
+			Health health = gamePlayer.GetComponentInChildren<Health> ();
+			health.playerName = lobby.playerName;
+			health.playerColor = lobby.playerColor;
             return true;
         }
 

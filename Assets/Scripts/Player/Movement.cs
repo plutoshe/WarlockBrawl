@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class Movement : NetworkBehaviour {
 	public bool Debug = true;
+
 	public int MaxHealth;
 	private int currentHealth;
 	public float shootDistance = 10f;
 	public float shootRate = .5f;
 	private Rigidbody rb;
-
 
 	private Animator anim;
 	public UnityEngine.AI.NavMeshAgent navMeshAgent;
@@ -47,13 +47,7 @@ public class Movement : NetworkBehaviour {
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (transform);
-		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
-		foreach(var children in childrenMaterial)
-		{
-			if (children.name == "Player") {
-				children.GetComponent<SkinnedMeshRenderer>().material = LocalMaterial;
-			}
-		}
+
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 		var angle = Random.Range (0, 360) * Mathf.PI / 180;
 		var x = Random.Range (0, safeFloor.transform.localScale.x) / 2; 

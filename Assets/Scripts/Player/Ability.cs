@@ -53,7 +53,6 @@ public class Ability : NetworkBehaviour
 		
 //		putball.GetComponent<ParticleSystem>().startRotation3D = SkillSpawn.rotation;
 		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 3;
-//		Debug.Log("!!!" + transform.parent.GetInstanceID ());
 
 		NetworkServer.Spawn(putball);
 		Destroy(putball, 8.0f);
@@ -73,7 +72,6 @@ public class Ability : NetworkBehaviour
 	void Start() {
 		for (var i = 0; i < AbilityList.Length; i++) {
 			var j = i;
-//			AbilityList [i].onClick.AddListener (() => SkillTrigger(i));
 			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(j);	});
 		}
 		SkillWait = new float[SkillInterval.Length];
@@ -93,8 +91,10 @@ public class Ability : NetworkBehaviour
 	}
 
 	void Update () {
-		
-//		Debug.Log("Update " + gameObject.GetInstanceID ());
+		if (!isLocalPlayer) {
+			return;
+		}
+
 		SkillLastWait += Time.deltaTime;
 		if (!isLocalPlayer) {
 			return;
