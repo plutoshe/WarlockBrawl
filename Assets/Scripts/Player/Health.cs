@@ -50,7 +50,7 @@ public class Health : NetworkBehaviour {
 		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
 
-	void OnChangeColor(Color color) {
+	void OnChangeColor(Color playerColor) {
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{

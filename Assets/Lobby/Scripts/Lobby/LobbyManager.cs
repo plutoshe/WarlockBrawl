@@ -334,6 +334,7 @@ namespace Prototype.NetworkLobby
 			LobbyPlayer lobby = lobbyPlayer.GetComponent<LobbyPlayer>();
 			Health health = gamePlayer.GetComponentInChildren<Health> ();
 			health.playerName = lobby.playerName;
+			Debug.Log (lobby.playerColor.ToString());
 			health.playerColor = lobby.playerColor;
             return true;
         }
