@@ -21,21 +21,28 @@ public class Status: NetworkBehaviour {
 			
 		}
 //		Debug.Log (statusDemo.Count);
+		var statusList = new List<KeyValuePair<KeyValuePair<string, Color>, int>>();
 		for (int i = 0; i < players.Length; i++) {
-			
 			Health status = players[i].GetComponent<Health> ();
 
+			statusList.Add(new KeyValuePair<KeyValuePair<string, Color>, int>(
+				new KeyValuePair<string, Color>(status.playerName, status.playerColor), 
+				status.score + status.healthNum * 500));
+		}
+		statusList.Sort((pair1,pair2) => pair1.Value.CompareTo(pair2.Value));
+
+		for (int i = 0; i < statusList.Count; i++) {
 			var textArr = statusDemo[i].GetComponentsInChildren<Text>();
 			var imageArr = statusDemo[i].GetComponentsInChildren<Image>();
 			for (int j = 0; j < textArr.Length; j++) {
-				if (textArr [j].gameObject.name == "PlayerName") 
-					textArr [j].text = status.playerName;
+				if (textArr [j].gameObject.name == "PlayerName")
+					textArr [j].text = statusList [i].Key.Key;
 				if (textArr [j].gameObject.name == "Score")
-					textArr [j].text = "" + status.score;
-				textArr [j].color = status.playerColor;
+					textArr [j].text = "" + statusList [i].Value;
+				textArr [j].color = statusList [i].Key.Value;
 			}
 			for (int j = 0; j < imageArr.Length; j++) {
-				imageArr [j].color = status.playerColor;
+				imageArr [j].color = statusList [i].Key.Value;
 			}
 		}
 	}
