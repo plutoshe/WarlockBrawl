@@ -8,11 +8,16 @@ public class Ability : NetworkBehaviour
 	public GameObject FireballPrefab;
 	public GameObject PutballPrefab;
 	public GameObject ManaShield;
+	public GameObject AbilityPanel;
 	private UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+	public Button[] AbilityList;
+	public Image[] AbilityCountdown;
+
+	public UnityEngine.KeyCode[] AbilityKey = { KeyCode.Q, KeyCode.W, KeyCode.E, KeyCode.R };
 
 	public Transform SkillSpawn;
 	public float[] SkillInterval = {2.0f, 2.0f, 2.0f, 2.0f};
-	public Image[] AbilityCountdown;
 	private float[] SkillWait;
 	private float SkillLastWait;
 	private int SkillSelect = -1;
@@ -21,13 +26,13 @@ public class Ability : NetworkBehaviour
 	public Texture2D cursorTexture;
 	public CursorMode cursorMode = CursorMode.Auto;
 	public Vector2 hotSpot = Vector2.zero;
-	public Button[] AbilityList;
+
 
 	// This [Command] code is called on the Client …
 	// … but it is run on the Server!
 	[Command]
 	void CmdShootFireball() {
-
+		
 		//		var gotoRotation = Quaternion.FromToRotation(transform.rotation, hit.
 
 		var fireball = (GameObject)Instantiate (
@@ -70,10 +75,17 @@ public class Ability : NetworkBehaviour
 	}
 
 	void Start() {
+
+		AbilityList = new Button[AbilityKey.Length];
+		AbilityCountdown = new Image[AbilityKey.Length];
+		AbilityList = AbilityPanel.GetComponentsInChildren<Button> ();
 		for (var i = 0; i < AbilityList.Length; i++) {
-			var j = i;
-			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(j);	});
+			Debug.Log (AbilityList [i].gameObject.name);
+			AbilityCountdown [i] = AbilityList [i].transform.GetChild(1).GetComponent<Image>();
+			var tmpI = i;
+			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(tmpI);	});
 		}
+
 		SkillWait = new float[SkillInterval.Length];
 		SkillInterval.CopyTo (SkillWait, 0);
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
@@ -92,18 +104,20 @@ public class Ability : NetworkBehaviour
 
 	void Update () {
 		if (!isLocalPlayer) {
+			AbilityPanel.SetActive (false);
 			return;
 		}
-
+		AbilityPanel.SetActive (true);
 		SkillLastWait += Time.deltaTime;
-		if (!isLocalPlayer) {
-			return;
-		}
 		for (int i = 0; i < AbilityCountdown.Length; i++) {
+			Debug.Log (ManaShield.activeSelf);
+			var fillFrac = SkillInterval [i] - SkillLastWait - SkillWait [i];
+			if (fillFrac < 0) fillFrac = 0;
+			Debug.Log (AbilityCountdown[i].name);
 			if  (ManaShield.activeSelf) 
 				AbilityCountdown [i].fillAmount = 1;
 			else 
-				AbilityCountdown [i].fillAmount = (SkillInterval [i] - SkillLastWait - SkillWait [i]) / SkillInterval [i];
+				AbilityCountdown [i].fillAmount = fillFrac / SkillInterval [i];
 		}
 		if (ManaShield.activeSelf)
 			return;
@@ -147,18 +161,12 @@ public class Ability : NetworkBehaviour
 				SkillSelect = -1;
 			}
 		} 
-		if (Input.GetKeyDown (KeyCode.Q)) {
-			AbilityList [0].onClick.Invoke ();
-		} 
-		if (Input.GetKeyDown (KeyCode.W)) {
-			AbilityList [1].onClick.Invoke ();
-		} 
-		if (Input.GetKeyDown (KeyCode.E)) {
-			AbilityList [2].onClick.Invoke ();
-		} 
-		if (Input.GetKeyDown (KeyCode.R)) {
-			AbilityList [3].onClick.Invoke ();
-		} 
+		for (int i = 0; i < AbilityList.Length; i++) {
+//			Debug.Log (AbilityKey [i].ToString ());
+			if (Input.GetKeyDown (AbilityKey[i])) {
+				AbilityList [i].onClick.Invoke ();
+			} 
+		}
 		if (Input.GetKeyDown(KeyCode.Escape)) {
 			Cursor.SetCursor (null, Vector2.zero, cursorMode);
 			SkillSelect = -1;
