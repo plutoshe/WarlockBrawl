@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class Status: NetworkBehaviour {
 	public List<GameObject> statusDemo;
 	public GameObject statusItemPrefab;
-
+	void Start() {
+		transform.position = new Vector3 (0, Screen.height, 0);
+	}
 	void Update() {
 
 		var players = GameObject.FindGameObjectsWithTag ("Player");
@@ -17,8 +19,10 @@ public class Status: NetworkBehaviour {
 			children.transform.parent = gameObject.transform;
 			children.transform.localPosition = new Vector3 (0, -18.75f * i, 0);
 			statusDemo.Add(children);
-				
-			
+		}
+		while (players.Length < statusDemo.Count) {
+			Destroy (statusDemo [statusDemo.Count - 1]);
+			statusDemo.RemoveAt (statusDemo.Count - 1);
 		}
 //		Debug.Log (statusDemo.Count);
 		var statusList = new List<KeyValuePair<KeyValuePair<string, Color>, int>>();
