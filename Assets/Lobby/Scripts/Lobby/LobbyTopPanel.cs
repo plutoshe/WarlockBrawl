@@ -7,7 +7,7 @@ namespace Prototype.NetworkLobby
     public class LobbyTopPanel : MonoBehaviour
     {
         public bool isInGame = false;
-
+		public bool isAllowEsc = true;
         protected bool isDisplayed = true;
         protected Image panelImage;
 
@@ -22,7 +22,7 @@ namespace Prototype.NetworkLobby
             if (!isInGame)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+			if (isAllowEsc && Input.GetKeyDown(KeyCode.Escape))
             {
                 ToggleVisibility(!isDisplayed);
             }
