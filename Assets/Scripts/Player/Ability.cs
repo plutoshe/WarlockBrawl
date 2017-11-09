@@ -31,14 +31,14 @@ public class Ability : NetworkBehaviour
 	// This [Command] code is called on the Client …
 	// … but it is run on the Server!
 	[Command]
-	void CmdShootFireball() {
+	void CmdShootFireball(Vector3 ballPosition, Quaternion ballRotation) {
 		
 		//		var gotoRotation = Quaternion.FromToRotation(transform.rotation, hit.
 
 		var fireball = (GameObject)Instantiate (
 			FireballPrefab,
-			SkillSpawn.position,
-			SkillSpawn.rotation);
+			ballPosition,
+			ballRotation);
 		
 
 		//		Quaternion.RotateTowards
@@ -50,11 +50,11 @@ public class Ability : NetworkBehaviour
 	}
 
 	[Command]
-	void CmdShootPutball() {
+	void CmdShootPutball(Vector3 ballPosition, Quaternion ballRotation) {
 		var putball = (GameObject)Instantiate (
             PutballPrefab,
-            SkillSpawn.position,
-			SkillSpawn.rotation);
+            ballPosition,
+			ballRotation);
 		
 //		putball.GetComponent<ParticleSystem>().startRotation3D = SkillSpawn.rotation;
 		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 3;
@@ -80,7 +80,6 @@ public class Ability : NetworkBehaviour
 		AbilityCountdown = new Image[AbilityKey.Length];
 		AbilityList = AbilityPanel.GetComponentsInChildren<Button> ();
 		for (var i = 0; i < AbilityList.Length; i++) {
-			Debug.Log (AbilityList [i].gameObject.name);
 			AbilityCountdown [i] = AbilityList [i].transform.GetChild(1).GetComponent<Image>();
 			var tmpI = i;
 			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(tmpI);	});
@@ -110,10 +109,8 @@ public class Ability : NetworkBehaviour
 		AbilityPanel.SetActive (true);
 		SkillLastWait += Time.deltaTime;
 		for (int i = 0; i < AbilityCountdown.Length; i++) {
-			Debug.Log (ManaShield.activeSelf);
 			var fillFrac = SkillInterval [i] - SkillLastWait - SkillWait [i];
 			if (fillFrac < 0) fillFrac = 0;
-			Debug.Log (AbilityCountdown[i].name);
 			if  (ManaShield.activeSelf) 
 				AbilityCountdown [i].fillAmount = 1;
 			else 
@@ -137,12 +134,13 @@ public class Ability : NetworkBehaviour
 				if (SkillSelect == 0) {
 					Vector3 targetDir = hit.point - transform.position; 
 					transform.rotation = Quaternion.LookRotation (targetDir);
-					CmdShootFireball ();
+					CmdShootFireball (SkillSpawn.position, SkillSpawn.rotation);
 				}
 				if (SkillSelect == 1) {
 					Vector3 targetDir = hit.point - transform.position; 
 					transform.rotation = Quaternion.LookRotation (targetDir);
-					CmdShootPutball ();
+
+					CmdShootPutball (SkillSpawn.position, SkillSpawn.rotation);
 				}
 				if (SkillSelect == 2) {
 					Vector3 targetDir = hit.point - transform.position; 

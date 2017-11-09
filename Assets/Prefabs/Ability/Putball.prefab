@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 136284834908438334}
   - component: {fileID: 114141846184171720}
   - component: {fileID: 114051365284513090}
+  - component: {fileID: 114739100367226830}
   m_Layer: 13
   m_Name: Putball
   m_TagString: Untagged
@@ -103,6 +104,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ce346dc4aac412886049b1b57e6fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114739100367226830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398007142293884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 3
+  m_SendInterval: 0
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!136 &136284834908438334
 CapsuleCollider:
   m_ObjectHideFlags: 1

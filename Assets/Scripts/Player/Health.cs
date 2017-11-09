@@ -43,6 +43,7 @@ public class Health : NetworkBehaviour {
 		anim = GetComponent <Animator> ();
 
 		score = 0;
+		currentHealth = maxHealth;
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{
