@@ -9,7 +9,7 @@ public class Health : NetworkBehaviour {
 	// SynVar setting
 	[SyncVar]
 	public string playerName = "";
-	[SyncVar (hook = "OnChangeColor")]
+	[SyncVar]
 	public Color playerColor = Color.blue;
 	[SyncVar(hook = "OnChangeHealth")]
 	public int currentHealth = maxHealth;
@@ -43,14 +43,6 @@ public class Health : NetworkBehaviour {
 		anim = GetComponent <Animator> ();
 
 		score = 0;
-	}
-
-	public void OnChangeHealth (int currentHealth)
-	{
-		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
-	}
-
-	public void OnChangeColor(Color playerColor) {
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{
@@ -58,8 +50,19 @@ public class Health : NetworkBehaviour {
 				children.GetComponent<SkinnedMeshRenderer>().material.color = playerColor;
 			}
 		}
-
 	}
+
+	public void OnChangeHealth (int currentHealth)
+	{
+		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
+	}
+		
+//	public void OnChangeColor(Color playerColor) {
+//
+//
+//	}
+
+
 
 	public void AlterDamgePerSecond(int damage) {
 		DamagePerSecond = damage;
@@ -128,8 +131,7 @@ public class Health : NetworkBehaviour {
 
 		RpcRespawn ();
 	}
-
-	[ClientRpc]
+		
 	void RpcRespawn()
 	{
 		if (isLocalPlayer)
