@@ -12,7 +12,7 @@ public class Health : NetworkBehaviour {
 	[SyncVar]
 	public Color playerColor = Color.blue;
 	[SyncVar(hook = "OnChangeHealth")]
-	public int currentHealth = maxHealth;
+	public int currentHealth;
 	[SyncVar]
 	public int healthNum = 2;
 	[SyncVar]
@@ -53,10 +53,12 @@ public class Health : NetworkBehaviour {
 		}
 	}
 
-	public void OnChangeHealth (int currentHealth)
+	public void OnChangeHealth (int newCurrentHealth)
 	{
+		currentHealth = newCurrentHealth;
 		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
+		
 		
 //	public void OnChangeColor(Color playerColor) {
 //
@@ -83,7 +85,17 @@ public class Health : NetworkBehaviour {
 			Debug.Log("Dead!");
 		}
 	}
-		
+
+	[Command] 
+	void CmdHealthAddition(int delta) {
+		currentHealth += delta;
+	}
+
+	[Command] 
+	void CmdScoreAddition(int delta) {
+		score += delta;
+	}
+
 
 	void Update() { //only local trigger
 		if (!isLocalPlayer) {
@@ -95,35 +107,34 @@ public class Health : NetworkBehaviour {
 		if (waitTime>=incrementTime) 
 		{
 			waitTime-=incrementTime;
-			currentHealth -= DamagePerSecond;
-
+			CmdHealthAddition (-DamagePerSecond);
 		}
 		// update score
 		waitStatusTime += Time.deltaTime;
 		if (waitStatusTime >= incrementStatusTime) {
 			waitStatusTime -= incrementStatusTime;
-			score += currentHealth;
+			CmdScoreAddition(currentHealth);
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha0)) {
-			currentHealth = 0;
+			CmdScoreAddition(-currentHealth);
 		}
-		if (!isDead && currentHealth <= 0)
-		{
-			isDead = true;
-			movement.enabled = false;
-			ability.enabled = false;
-			movement.navMeshAgent.isStopped = true;
-			anim.SetTrigger ("Die");
-			currentHealth = 0;
-			Debug.Log("Dead!");
-			if (healthNum <= 0) {
-			} else {
-				healthNum--;
-				StartCoroutine (Finale (5f));
-			}
-
-		}
+//		if (!isDead && currentHealth <= 0)
+//		{
+//			isDead = true;
+//			movement.enabled = false;
+//			ability.enabled = false;
+//			movement.navMeshAgent.isStopped = true;
+//			anim.SetTrigger ("Die");
+//			currentHealth = 05;
+//			Debug.Log("Dead!");
+//			if (healthNum <= 0) {
+//			} else {
+//				healthNum--;
+//				StartCoroutine (Finale (5f));
+//			}
+//
+//		}
 	}
 
 	IEnumerator Finale(float waitTime) {

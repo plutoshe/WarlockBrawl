@@ -12,7 +12,6 @@ public class Putball : MonoBehaviour {
 		var movement = hit.GetComponent<Movement> ();
 		if (health  != null)
 		{
-
 			health.TakeDamage(5);
 			movement.Impluse (30 * transform.forward.normalized);
 			Destroy (gameObject);

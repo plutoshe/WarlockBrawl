@@ -77,7 +77,8 @@ public class Ability : NetworkBehaviour
 //		objNetId.RemoveClientAuthority (connectionToClient);  
 	}
 
-	void OnChangemManaShield(bool manaShieldStatus) {
+	void OnChangemManaShield(bool newManaShieldStatus) {
+		manaShieldStatus = newManaShieldStatus;
 		ManaShield.SetActive (manaShieldStatus);
 	}
 
