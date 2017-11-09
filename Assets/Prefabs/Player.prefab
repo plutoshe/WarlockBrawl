@@ -89,6 +89,8 @@ GameObject:
   - component: {fileID: 198302563489239996}
   - component: {fileID: 199897006902721756}
   - component: {fileID: 136004639901850718}
+  - component: {fileID: 114979261489474326}
+  - component: {fileID: 114715565844683690}
   m_Layer: 0
   m_Name: ManaShield
   m_TagString: Untagged
@@ -1237,6 +1239,38 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114715565844683690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1233794840674662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 20
+    i1: 165
+    i2: 35
+    i3: 129
+    i4: 145
+    i5: 60
+    i6: 52
+    i7: 15
+    i8: 250
+    i9: 29
+    i10: 92
+    i11: 220
+    i12: 156
+    i13: 97
+    i14: 185
+    i15: 98
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114753934513550552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1413,6 +1447,27 @@ MonoBehaviour:
     i15: 98
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114979261489474326
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1233794840674662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!136 &136004639901850718
 CapsuleCollider:
   m_ObjectHideFlags: 1

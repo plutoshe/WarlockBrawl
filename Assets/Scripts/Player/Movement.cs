@@ -46,7 +46,6 @@ public class Movement : NetworkBehaviour {
 
 		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
-		Debug.Log("Camera Focus");
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (gameObject.transform);
 
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];

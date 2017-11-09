@@ -50,7 +50,6 @@ public class CameraFollow : MonoBehaviour
 	}
 
 	public void FollowTarget() {
-		Debug.Log (target.position);
 		transform.position = target.position + offset;
 	}
 

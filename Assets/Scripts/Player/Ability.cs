@@ -5,6 +5,8 @@ using System.Collections;
 
 public class Ability : NetworkBehaviour
 {	
+	[SyncVar(hook = "OnChangemManaShield")] 
+	public bool manaShieldStatus = false;
 	public GameObject FireballPrefab;
 	public GameObject PutballPrefab;
 	public GameObject ManaShield;
@@ -64,15 +66,21 @@ public class Ability : NetworkBehaviour
 	}
 
 	[Command] 
-	void CmdManaShield() {
-		ManaShield.gameObject.SetActive (true);
-		StartCoroutine (ManaShieldFade (0.5f));
+	void CmdManaShield(bool status) {
+		manaShieldStatus = status;
+//		ManaShield.gameObject.SetActive (true);
+//		StartCoroutine (ManaShieldFade (0.5f));
+//		var objNetId = obj.GetComponent<NetworkIdentity> ();        // get the object's network ID
+//		objNetId.AssignClientAuthority (connectionToClient);    // assign authority to the player who is changing the color
+//		Debug.Log(obj.name);
+//		RpcManaShield (obj, status);                                    // usse a Client RPC function to "paint" the object on all clients
+//		objNetId.RemoveClientAuthority (connectionToClient);  
 	}
 
-	IEnumerator ManaShieldFade(float waitTime) {
-		yield return new WaitForSeconds (waitTime);
-		ManaShield.gameObject.SetActive (false);
+	void OnChangemManaShield(bool manaShieldStatus) {
+		ManaShield.SetActive (manaShieldStatus);
 	}
+
 
 	void Start() {
 
@@ -100,6 +108,12 @@ public class Ability : NetworkBehaviour
 			}
 		}
 	}
+
+	IEnumerator ManaShieldFade(float waitTime) {
+		yield return new WaitForSeconds (waitTime);
+		CmdManaShield (false);
+	}
+
 
 	void Update () {
 		if (!isLocalPlayer) {
@@ -154,7 +168,11 @@ public class Ability : NetworkBehaviour
 //					navMeshAgent.destination = transform.position;
 				}
 				if (SkillSelect == 3) {
-					CmdManaShield ();
+//					Debug.Log(ManaShield.name);
+					CmdManaShield (true);
+
+					StartCoroutine (ManaShieldFade (1f));
+//					CmdManaShield ();
 				}
 				SkillSelect = -1;
 			}
