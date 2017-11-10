@@ -173,20 +173,16 @@ public class Ability : NetworkBehaviour
 					}
 					transform.position += targetDir;
 					navMeshAgent.isStopped = true;
-//					navMeshAgent.destination = transform.position;
 				}
 				if (SkillSelect == 3) {
-//					Debug.Log(ManaShield.name);
 					CmdManaShield (true);
 
 					StartCoroutine (ManaShieldFade (1f));
-//					CmdManaShield ();
 				}
 				SkillSelect = -1;
 			}
 		} 
 		for (int i = 0; i < AbilityList.Length; i++) {
-//			Debug.Log (AbilityKey [i].ToString ());
 			if (Input.GetKeyDown (AbilityKey[i])) {
 				AbilityList [i].onClick.Invoke ();
 			} 
@@ -195,5 +191,6 @@ public class Ability : NetworkBehaviour
 			Cursor.SetCursor (null, Vector2.zero, cursorMode);
 			SkillSelect = -1;
 		}
+			
 	}
 }

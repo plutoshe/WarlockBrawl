@@ -29,7 +29,7 @@ namespace Prototype.NetworkLobby
 
         }
 
-        public void ToggleVisibility(bool visible)
+       public void ToggleVisibility(bool visible)
         {
             isDisplayed = visible;
             foreach (Transform t in transform)

@@ -1325,6 +1325,7 @@ MonoBehaviour:
   score: 0
   healthBar: {fileID: 224676370017831080}
   DamagePerSecond: 0
+  Popup: {fileID: 0}
 --- !u!114 &114904024478719760
 MonoBehaviour:
   m_ObjectHideFlags: 1

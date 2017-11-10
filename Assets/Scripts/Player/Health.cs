@@ -36,12 +36,14 @@ public class Health : NetworkBehaviour {
 	private Ability ability;
 	private Animator anim;
 	bool isDead = false;
+	public GameObject Popup;
 
 	void Start() {
 		movement = GetComponent <Movement> ();
 		ability = GetComponent <Ability> ();
 		anim = GetComponent <Animator> ();
-
+		Popup = GameObject.FindGameObjectWithTag ("Popup");
+		Popup.SetActive (false);
 		score = 0;
 		currentHealth = maxHealth;
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -58,13 +60,6 @@ public class Health : NetworkBehaviour {
 		currentHealth = newCurrentHealth;
 		healthBar.sizeDelta = new Vector2(currentHealth/2, healthBar.sizeDelta.y);
 	}
-		
-		
-//	public void OnChangeColor(Color playerColor) {
-//
-//
-//	}
-
 
 
 	public void AlterDamgePerSecond(int damage) {
@@ -96,10 +91,21 @@ public class Health : NetworkBehaviour {
 		score += delta;
 	}
 
+	[Command]
+	void CmdHealthNumDecrease() {
+		healthNum--;
+	}
+
+	[Command]
+	void CmdEndGame() {
+	}
 
 	void Update() { //only local trigger
-		if (!isLocalPlayer) {
+		if (!isLocalPlayer || isDead) {
 			return;
+		}
+		if (Input.GetKeyDown (KeyCode.Y)) {
+			Popup.SetActive (true);
 		}
 
 		// update damage per second
@@ -119,22 +125,25 @@ public class Health : NetworkBehaviour {
 		if (Input.GetKeyDown(KeyCode.Alpha0)) {
 			CmdScoreAddition(-currentHealth);
 		}
-//		if (!isDead && currentHealth <= 0)
-//		{
-//			isDead = true;
-//			movement.enabled = false;
-//			ability.enabled = false;
-//			movement.navMeshAgent.isStopped = true;
-//			anim.SetTrigger ("Die");
-//			currentHealth = 05;
-//			Debug.Log("Dead!");
-//			if (healthNum <= 0) {
-//			} else {
-//				healthNum--;
-//				StartCoroutine (Finale (5f));
-//			}
-//
-//		}
+		if (!isDead && currentHealth <= 0)
+		{
+			isDead = true;
+			movement.enabled = false;
+			ability.enabled = false;
+			movement.navMeshAgent.isStopped = true;
+			anim.SetTrigger ("Die");
+			CmdHealthAddition (-currentHealth);
+			Debug.Log("Dead!");
+			if (healthNum <= 0) {
+				Popup.SetActive (true);
+				CmdHealthNumDecrease ();
+				CmdEndGame ();
+			} else {
+				CmdHealthNumDecrease ();
+				StartCoroutine (Finale (5f));
+			}
+
+		}
 	}
 
 	IEnumerator Finale(float waitTime) {
@@ -152,7 +161,7 @@ public class Health : NetworkBehaviour {
 			ability.enabled = true;
 			isDead = false;
 			anim.SetTrigger ("Respawn");
-			currentHealth = 100;
+			CmdHealthAddition (100-currentHealth);
 			var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 			var angle = Random.Range (0, 360) * Mathf.PI / 180;
 			var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
