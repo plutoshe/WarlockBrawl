@@ -42,10 +42,15 @@ public class Health : NetworkBehaviour {
 		movement = GetComponent <Movement> ();
 		ability = GetComponent <Ability> ();
 		anim = GetComponent <Animator> ();
-		Popup = GameObject.FindGameObjectWithTag ("Popup");
-		Popup.SetActive (false);
 		score = 0;
 		currentHealth = maxHealth;
+
+		Popup = GameObject.FindGameObjectWithTag ("Popup");
+		var proceed = Popup.transform.GetChild (1);
+		proceed.gameObject.SetActive (false);
+		Popup.SetActive (false);
+
+
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{
@@ -98,6 +103,17 @@ public class Health : NetworkBehaviour {
 
 	[Command]
 	void CmdEndGame() {
+		
+	}
+
+	[ClientRpc]
+	void RpcEndGame(string winnerText) {
+		var message = Popup.transform.GetChild (0);
+		message.gameObject.GetComponent<Text> ().text = winnerText;
+		var proceed = Popup.transform.GetChild (1);
+		proceed.gameObject.SetActive (false);
+		Popup.SetActive (true);
+
 	}
 
 	void Update() { //only local trigger
