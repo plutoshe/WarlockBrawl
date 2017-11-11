@@ -47,7 +47,7 @@ public class Health : NetworkBehaviour {
 
 		Popup = GameObject.FindGameObjectWithTag ("Popup");
 		var proceed = Popup.transform.GetChild (1);
-		proceed.gameObject.SetActive (false);
+		proceed.gameObject.SetActive (true);
 		Popup.SetActive (false);
 
 
@@ -91,6 +91,11 @@ public class Health : NetworkBehaviour {
 		currentHealth += delta;
 	}
 
+	[Command]
+	void CmdHealthSet(int value) {
+		currentHealth = value;
+	}
+
 	[Command] 
 	void CmdScoreAddition(int delta) {
 		score += delta;
@@ -101,21 +106,14 @@ public class Health : NetworkBehaviour {
 		healthNum--;
 	}
 
-	[Command]
-	void CmdEndGame() {
+	public void StopModel(bool status) {
+		isDead = status;
+		movement.enabled = !status;
+		ability.enabled = !status;
+		movement.navMeshAgent.isStopped = status;
+	}
+
 		
-	}
-
-	[ClientRpc]
-	void RpcEndGame(string winnerText) {
-		var message = Popup.transform.GetChild (0);
-		message.gameObject.GetComponent<Text> ().text = winnerText;
-		var proceed = Popup.transform.GetChild (1);
-		proceed.gameObject.SetActive (false);
-		Popup.SetActive (true);
-
-	}
-
 	void Update() { //only local trigger
 		if (!isLocalPlayer || isDead) {
 			return;
@@ -139,21 +137,17 @@ public class Health : NetworkBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha0)) {
-			CmdScoreAddition(-currentHealth);
+			CmdHealthSet(0);
 		}
 		if (!isDead && currentHealth <= 0)
 		{
-			isDead = true;
-			movement.enabled = false;
-			ability.enabled = false;
-			movement.navMeshAgent.isStopped = true;
+			StopModel (true);
 			anim.SetTrigger ("Die");
-			CmdHealthAddition (-currentHealth);
+			CmdHealthSet (0);
 			Debug.Log("Dead!");
 			if (healthNum <= 0) {
 				Popup.SetActive (true);
 				CmdHealthNumDecrease ();
-				CmdEndGame ();
 			} else {
 				CmdHealthNumDecrease ();
 				StartCoroutine (Finale (5f));
@@ -173,11 +167,9 @@ public class Health : NetworkBehaviour {
 	{
 		if (isLocalPlayer)
 		{	
-			movement.enabled = true;
-			ability.enabled = true;
-			isDead = false;
+			StopModel (false);
 			anim.SetTrigger ("Respawn");
-			CmdHealthAddition (100-currentHealth);
+			CmdHealthSet (100);
 			var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 			var angle = Random.Range (0, 360) * Mathf.PI / 180;
 			var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
