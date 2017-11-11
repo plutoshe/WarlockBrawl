@@ -17,7 +17,6 @@ public class Health : NetworkBehaviour {
 	public int healthNum = 2;
 	[SyncVar]
 	public int score = 0;
-	[SyncVar]
 	public bool isDead = false;
 
 	// Local status variables
@@ -102,17 +101,6 @@ public class Health : NetworkBehaviour {
 		}
 	}
 
-	[Command] 
-	public void CmdRespawn() {
-		currentHealth = maxHealth;
-		isDead = false;
-	}
-
-	[Command] 
-	public void CmdIsDeadSet(bool value) {
-		isDead = value;
-	}
-
 	[Command]
 	void CmdColorSet(Color color) {
 		playerColor = color;
@@ -152,6 +140,9 @@ public class Health : NetworkBehaviour {
 
 		
 	void Update() { //only local trigger
+		if (currentHealth > 0)
+			isDead = false;
+			
 		if (!isLocalPlayer || isDead) {
 			return;
 		}
@@ -176,10 +167,11 @@ public class Health : NetworkBehaviour {
 		if (Input.GetKeyDown(KeyCode.Alpha0)) {
 			CmdHealthSet(0);
 		}
-		if (!isDead && currentHealth <= 0)
+		if (currentHealth <= 0)
 		{
+			isDead = true;
 			StopModel (true);
-			CmdIsDeadSet (true);
+
 			anim.SetTrigger ("Die");
 			CmdHealthSet (0);
 			Debug.Log("Dead!");
@@ -202,7 +194,7 @@ public class Health : NetworkBehaviour {
 
 	void Respawn()
 	{
-		CmdRespawn ();
+		CmdHealthSet (maxHealth);
 		StopModel (false);
 		anim.SetTrigger ("Respawn");
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
@@ -211,8 +203,11 @@ public class Health : NetworkBehaviour {
 
 		var z = x * Mathf.Sin (angle);
 		x = x * Mathf.Cos(angle);
-
+		var navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		transform.position = new Vector3 (x, 0, z);
+		navMeshAgent.destination = transform.position;
+		navMeshAgent.isStopped  = true;
+
 		Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 	}
 

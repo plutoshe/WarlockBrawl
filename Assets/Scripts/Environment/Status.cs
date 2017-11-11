@@ -48,7 +48,10 @@ public class Status: NetworkBehaviour {
 				remainPlayer++;
 				winner = i;
 			}
-			statusList.Add(new KeyValuePair<int, int>(i,  status.score + status.healthNum * 500));
+			if (status.healthNum >= 0) 
+				statusList.Add (new KeyValuePair<int, int> (i, status.score + status.healthNum * 500));
+			else 
+				statusList.Add (new KeyValuePair<int, int> (i, status.score));
 		}
 		statusList.Sort((pair1,pair2) => -pair1.Value.CompareTo(pair2.Value));
 	

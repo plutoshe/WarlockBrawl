@@ -6,10 +6,6 @@ using UnityEngine.UI;
 public class Movement : NetworkBehaviour {
 	public bool DebugMode = true;
 
-	public int MaxHealth;
-	private int currentHealth;
-	public float shootDistance = 10f;
-	public float shootRate = .5f;
 	private Rigidbody rb;
 
 	private Animator anim;
@@ -44,7 +40,6 @@ public class Movement : NetworkBehaviour {
 //		Lerp
 
 
-		currentHealth = MaxHealth;
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (gameObject.transform);
 
