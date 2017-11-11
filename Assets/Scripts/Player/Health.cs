@@ -9,7 +9,7 @@ public class Health : NetworkBehaviour {
 	// SynVar setting
 	[SyncVar]
 	public string playerName = "";
-	[SyncVar]
+	[SyncVar(hook="OnChangeColor")]
 	public Color playerColor = Color.blue;
 	[SyncVar(hook = "OnChangeHealth")]
 	public int currentHealth;
@@ -17,6 +17,8 @@ public class Health : NetworkBehaviour {
 	public int healthNum = 2;
 	[SyncVar]
 	public int score = 0;
+	[SyncVar]
+	public bool isDead = false;
 
 	// Local status variables
 	public RectTransform healthBar;
@@ -35,22 +37,9 @@ public class Health : NetworkBehaviour {
 	private Movement movement;
 	private Ability ability;
 	private Animator anim;
-	bool isDead = false;
 	public GameObject Popup;
 
-	void Start() {
-		movement = GetComponent <Movement> ();
-		ability = GetComponent <Ability> ();
-		anim = GetComponent <Animator> ();
-		score = 0;
-		currentHealth = maxHealth;
-
-		Popup = GameObject.FindGameObjectWithTag ("Popup");
-		var proceed = Popup.transform.GetChild (1);
-		proceed.gameObject.SetActive (true);
-		Popup.SetActive (false);
-
-
+	void changeFacade() {
 		var childrenMaterial = GetComponentsInChildren<SkinnedMeshRenderer>();
 		foreach(var children in childrenMaterial)
 		{
@@ -59,6 +48,33 @@ public class Health : NetworkBehaviour {
 			}
 		}
 	}
+
+	public void Start() {
+		anim = GetComponent <Animator> ();
+		changeFacade ();
+	}
+
+	public override void OnStartLocalPlayer() {
+		movement = GetComponent <Movement> ();
+		ability = GetComponent <Ability> ();
+		CmdScoreSet (0);
+		CmdHealthSet(maxHealth);
+
+		Popup = GameObject.FindGameObjectWithTag ("Popup");
+		var proceed = Popup.transform.GetChild (1);
+		proceed.gameObject.SetActive (true);
+		Popup.SetActive (false);
+		Debug.Log (transform.name + " " +  playerColor.ToString());
+		CmdColorSet (playerColor);
+
+	}
+
+	public void OnChangeColor(Color newColor) {
+		Debug.Log ("!" + transform.name + " " +  newColor.ToString());
+		playerColor = newColor;
+		changeFacade ();
+	}
+
 
 	public void OnChangeHealth (int newCurrentHealth)
 	{
@@ -87,8 +103,28 @@ public class Health : NetworkBehaviour {
 	}
 
 	[Command] 
+	public void CmdRespawn() {
+		currentHealth = maxHealth;
+		isDead = false;
+	}
+
+	[Command] 
+	public void CmdIsDeadSet(bool value) {
+		isDead = value;
+	}
+
+	[Command]
+	void CmdColorSet(Color color) {
+		playerColor = color;
+	}
+
+	[Command] 
 	void CmdHealthAddition(int delta) {
 		currentHealth += delta;
+	}
+	[Command]
+	void CmdScoreSet(int value) {
+		score = value;
 	}
 
 	[Command]
@@ -107,10 +143,11 @@ public class Health : NetworkBehaviour {
 	}
 
 	public void StopModel(bool status) {
-		isDead = status;
-		movement.enabled = !status;
-		ability.enabled = !status;
-		movement.navMeshAgent.isStopped = status;
+		if (movement != null) {
+			movement.enabled = !status;
+			ability.enabled = !status;
+			movement.navMeshAgent.isStopped = status;
+		}
 	}
 
 		
@@ -142,16 +179,16 @@ public class Health : NetworkBehaviour {
 		if (!isDead && currentHealth <= 0)
 		{
 			StopModel (true);
+			CmdIsDeadSet (true);
 			anim.SetTrigger ("Die");
 			CmdHealthSet (0);
 			Debug.Log("Dead!");
-			if (healthNum <= 0) {
+			if (healthNum <= 0) 
 				Popup.SetActive (true);
-				CmdHealthNumDecrease ();
-			} else {
-				CmdHealthNumDecrease ();
+			else 
 				StartCoroutine (Finale (5f));
-			}
+			
+			CmdHealthNumDecrease ();
 
 		}
 	}
@@ -160,26 +197,25 @@ public class Health : NetworkBehaviour {
 
 		yield return new WaitForSeconds (waitTime);
 
-		RpcRespawn ();
+		Respawn ();
 	}
-		
-	void RpcRespawn()
+
+	void Respawn()
 	{
-		if (isLocalPlayer)
-		{	
-			StopModel (false);
-			anim.SetTrigger ("Respawn");
-			CmdHealthSet (100);
-			var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
-			var angle = Random.Range (0, 360) * Mathf.PI / 180;
-			var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
+		CmdRespawn ();
+		StopModel (false);
+		anim.SetTrigger ("Respawn");
+		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
+		var angle = Random.Range (0, 360) * Mathf.PI / 180;
+		var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
 
-			var z = x * Mathf.Sin (angle);
-			x = x * Mathf.Cos(angle);
+		var z = x * Mathf.Sin (angle);
+		x = x * Mathf.Cos(angle);
 
-			transform.position = new Vector3 (x, 0, z);
-			Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
-		}
+		transform.position = new Vector3 (x, 0, z);
+		Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 	}
+
+
 		
 }

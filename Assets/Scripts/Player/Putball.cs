@@ -12,9 +12,10 @@ public class Putball : MonoBehaviour {
 		var movement = hit.GetComponent<Movement> ();
 		if (health  != null)
 		{
+			Destroy (gameObject);
 			health.TakeDamage(5);
 			movement.Impluse (30 * transform.forward.normalized);
-			Destroy (gameObject);
+
 		}
 		if (collider.gameObject.name == "ManaShield") 
 			Destroy (gameObject);
