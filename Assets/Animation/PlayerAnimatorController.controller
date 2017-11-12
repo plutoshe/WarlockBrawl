@@ -181,7 +181,7 @@ AnimatorState:
   m_Motion: {fileID: 7400004, guid: f1d84cc28597f5641a3d9cbc4df7e306, type: 3}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: IsWalking
   m_CycleOffsetParameter: 
 --- !u!1102 &1102823490699755130
 AnimatorState:
@@ -205,7 +205,7 @@ AnimatorState:
   m_Motion: {fileID: 7400002, guid: f1d84cc28597f5641a3d9cbc4df7e306, type: 3}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: IsWalking
   m_CycleOffsetParameter: 
 --- !u!1107 &1107687295080935824
 AnimatorStateMachine:

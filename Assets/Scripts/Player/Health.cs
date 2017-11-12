@@ -171,6 +171,7 @@ public class Health : NetworkBehaviour {
 			StopModel (true);
 
 			anim.SetTrigger ("Die");
+			anim.animator.ResetTrigger ("Die");
 			CmdHealthSet (0);
 			Debug.Log("Dead!");
 			if (healthNum <= 0) 
@@ -195,6 +196,7 @@ public class Health : NetworkBehaviour {
 		CmdHealthSet (maxHealth);
 		StopModel (false);
 		anim.SetTrigger ("Respawn");
+		anim.animator.ResetTrigger ("Respawn");
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
 		var angle = Random.Range (0, 360) * Mathf.PI / 180;
 		var x = Random.Range (0, safeFloor.transform.localScale.x) / 2;
