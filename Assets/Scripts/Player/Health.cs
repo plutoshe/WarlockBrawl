@@ -35,7 +35,7 @@ public class Health : NetworkBehaviour {
 	// dead action setting
 	private Movement movement;
 	private Ability ability;
-	private Animator anim;
+	private NetworkAnimator anim;
 	public GameObject Popup;
 
 	void changeFacade() {
@@ -49,7 +49,7 @@ public class Health : NetworkBehaviour {
 	}
 
 	public void Start() {
-		anim = GetComponent <Animator> ();
+		anim = GetComponent <NetworkAnimator> ();
 		changeFacade ();
 	}
 
@@ -63,13 +63,11 @@ public class Health : NetworkBehaviour {
 		var proceed = Popup.transform.GetChild (1);
 		proceed.gameObject.SetActive (true);
 		Popup.SetActive (false);
-		Debug.Log (transform.name + " " +  playerColor.ToString());
 		CmdColorSet (playerColor);
 
 	}
 
 	public void OnChangeColor(Color newColor) {
-		Debug.Log ("!" + transform.name + " " +  newColor.ToString());
 		playerColor = newColor;
 		changeFacade ();
 	}

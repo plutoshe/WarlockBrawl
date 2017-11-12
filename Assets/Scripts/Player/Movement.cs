@@ -28,8 +28,7 @@ public class Movement : NetworkBehaviour {
 	{
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody> ();
-
-//		Vector3 explosionPos = new Vector3(0,0,0);
+		//Vector3 explosionPos = new Vector3(0,0,0);
 //		Collider[] objectsInRange = Physics.OverlapSphere(explosionPos, radius);
 //		foreach (var i in objectsInRange) {
 //			Debug.Log(i.name);

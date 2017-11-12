@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 114758238747936324}
   - component: {fileID: 114349137897903934}
   - component: {fileID: 114172011996508848}
+  - component: {fileID: 114829371015335872}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -704,9 +705,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DebugMode: 1
-  MaxHealth: 0
-  shootDistance: 10
-  shootRate: 0.5
   navMeshAgent: {fileID: 0}
   LocalMaterial: {fileID: 2100000, guid: 666dc86baf7b04f3fbf88a3f28bc307d, type: 2}
   FollowCanvas: {fileID: 223867097097315092}
@@ -1280,6 +1278,25 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114829371015335872
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1732375152954992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 95337998911143148}
+  m_ParameterSendBits: 7
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
 --- !u!114 &114842287898392524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1323,6 +1340,7 @@ MonoBehaviour:
   currentHealth: 100
   healthNum: 2
   score: 0
+  isDead: 0
   healthBar: {fileID: 224676370017831080}
   DamagePerSecond: 0
   Popup: {fileID: 0}
