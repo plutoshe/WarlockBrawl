@@ -90,6 +90,7 @@ public class Ability : NetworkBehaviour
 		AbilityList = AbilityPanel.GetComponentsInChildren<Button> ();
 		for (var i = 0; i < AbilityList.Length; i++) {
 			AbilityCountdown [i] = AbilityList [i].transform.GetChild(1).GetComponent<Image>();
+			AbilityCountdown[i].color = new Color(200f,200f,200f,.6f);
 			var tmpI = i;
 			AbilityList [i].onClick.AddListener (delegate {SkillTrigger(tmpI);	});
 		}
