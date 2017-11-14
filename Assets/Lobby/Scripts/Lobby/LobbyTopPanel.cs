@@ -9,19 +9,20 @@ namespace Prototype.NetworkLobby
         public bool isInGame = false;
 		public bool isAllowEsc = true;
         protected bool isDisplayed = true;
-        protected Image panelImage;
+        protected RawImage panelImage;
+		public GameObject Background;
 
         void Start()
         {
-            panelImage = GetComponent<Image>();
+			panelImage = GetComponent<RawImage>();
         }
 
 
         void Update()
         {
+			Background.gameObject.SetActive (!isInGame);
             if (!isInGame)
                 return;
-
 			if (isAllowEsc && Input.GetKeyDown(KeyCode.Escape))
             {
                 ToggleVisibility(!isDisplayed);
