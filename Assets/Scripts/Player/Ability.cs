@@ -123,11 +123,13 @@ public class Ability : NetworkBehaviour
 			return;
 		}
 		var topPanel = GameObject.FindGameObjectWithTag ("Trial");
-		var sg = topPanel.GetComponent<Prototype.NetworkLobby.LobbyTopPanel> ();
-		if (SkillSelect < 0) {
-			sg.isAllowEsc = true;
-		} else {
-			sg.isAllowEsc = false;
+		if (topPanel != null) {
+			var sg = topPanel.GetComponent<Prototype.NetworkLobby.LobbyTopPanel> ();
+			if (SkillSelect < 0) {
+				sg.isAllowEsc = true;
+			} else {
+				sg.isAllowEsc = false;
+			}
 		}
 		AbilityPanel.SetActive (true);
 		SkillLastWait += Time.deltaTime;

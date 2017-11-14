@@ -62,7 +62,6 @@ public class Health : NetworkBehaviour {
 		Popup = GameObject.FindGameObjectWithTag ("Popup");
 		var proceed = Popup.transform.GetChild (1);
 		proceed.gameObject.SetActive (true);
-		Popup.SetActive (false);
 		CmdColorSet (playerColor);
 
 	}
