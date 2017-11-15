@@ -12,7 +12,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: PlutoShe
   productName: WarlockBattle
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: f8f547115398e4705acdb42a847639ed, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -237,7 +237,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 68de4d806dad842f190e0a80760874c4, type: 3}
+      m_Icon: {fileID: 2800000, guid: c1561962aaf0049f58ae669a31da53a4, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching:

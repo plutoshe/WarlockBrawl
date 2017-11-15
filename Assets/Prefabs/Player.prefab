@@ -832,7 +832,7 @@ MonoBehaviour:
   - 2
   - 2
   BlinkRadius: 6
-  cursorTexture: {fileID: 2800000, guid: 90ee7b540ee22b84fb50965ff82a5d28, type: 3}
+  cursorTexture: {fileID: 2800000, guid: f920e565516774ff289fd3d5666a44df, type: 3}
   cursorMode: 0
   hotSpot: {x: 0, y: 0}
 --- !u!114 &114255012776565552

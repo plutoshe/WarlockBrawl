@@ -178,9 +178,7 @@ public class Ability : NetworkBehaviour
 					navMeshAgent.isStopped = true;
 				}
 				if (SkillSelect == 3) {
-					Debug.Log ("!!!!");
 					CmdManaShield (true);
-					Debug.Log ("!!!!");
 					StartCoroutine (ManaShieldFade (1f));
 				}
 				SkillSelect = -1;
