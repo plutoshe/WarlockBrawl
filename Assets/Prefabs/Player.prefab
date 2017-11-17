@@ -828,9 +828,9 @@ MonoBehaviour:
   SkillSpawn: {fileID: 4236258072227654}
   SkillInterval:
   - 2
-  - 2
-  - 2
-  - 2
+  - 4
+  - 8
+  - 8
   BlinkRadius: 6
   cursorTexture: {fileID: 2800000, guid: f920e565516774ff289fd3d5666a44df, type: 3}
   cursorMode: 0

@@ -9,12 +9,12 @@ namespace Prototype.NetworkLobby
         public bool isInGame = false;
 		public bool isAllowEsc = true;
         protected bool isDisplayed = true;
-        protected RawImage panelImage;
+        protected Image panelImage;
 		public GameObject Background;
 
         void Start()
         {
-			panelImage = GetComponent<RawImage>();
+			panelImage = GetComponent<Image>();
         }
 
 

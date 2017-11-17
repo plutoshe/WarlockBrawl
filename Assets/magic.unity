@@ -1678,14 +1678,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WaitTime:
   - 2
-  - 2
-  - 2
-  - 2
+  - 20
+  - 20
+  - 20
   ChangeTime:
-  - 3
-  - 3
-  - 3
-  - 3
+  - 10
+  - 10
+  - 10
+  - 10
   ChangeSize:
   - 40
   - 30
