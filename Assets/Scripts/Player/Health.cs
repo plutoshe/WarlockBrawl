@@ -22,11 +22,12 @@ public class Health : NetworkBehaviour {
 	// Local status variables
 	public RectTransform healthBar;
 	public const int maxHealth = 100;
-	public int DamagePerSecond = 0;
 
-	// for Damage per second
+
+	// for Damage per incrementTime second
 	private float waitTime = 0f;
-	private float incrementTime = 1f;
+	private float incrementTime = 2f;
+	public int DamagePerInterval = 0;
 
 	// for Score per interval
 	private float waitStatusTime = 0f;
@@ -80,7 +81,7 @@ public class Health : NetworkBehaviour {
 
 
 	public void AlterDamgePerSecond(int damage) {
-		DamagePerSecond = damage;
+		DamagePerInterval = damage;
 		waitTime = 0f;
 
 	}
@@ -152,7 +153,7 @@ public class Health : NetworkBehaviour {
 		if (waitTime>=incrementTime) 
 		{
 			waitTime-=incrementTime;
-			CmdHealthAddition (-DamagePerSecond);
+			CmdHealthAddition (-DamagePerInterval);
 		}
 		// update score
 		waitStatusTime += Time.deltaTime;

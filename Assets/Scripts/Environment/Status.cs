@@ -73,6 +73,8 @@ public class Status: NetworkBehaviour {
 				while (players.Length > statusDemo.Count) {
 					int i = statusDemo.Count;
 					var children = (GameObject)Instantiate (statusItemPrefab);
+					children.transform.parent = transform;
+					children.transform.localScale = new Vector3 (1, 1, 1);
 					children.transform.parent = gameObject.transform;
 					children.transform.localPosition = new Vector3 (0, -20 * i - 40, 0);
 					statusDemo.Add (children);
