@@ -10,7 +10,6 @@ namespace Prototype.NetworkLobby
 		public bool isAllowEsc = true;
         protected bool isDisplayed = true;
         protected Image panelImage;
-		public GameObject Background;
 
         void Start()
         {
@@ -20,7 +19,6 @@ namespace Prototype.NetworkLobby
 
         void Update()
         {
-			Background.gameObject.SetActive (!isInGame);
             if (!isInGame)
                 return;
 			if (isAllowEsc && Input.GetKeyDown(KeyCode.Escape))
