@@ -23,23 +23,15 @@ public class Movement : NetworkBehaviour {
 	// put force setting
 //	public float radius = 5.0F;
 //	public float power = 300.0F;
-		
-	public override void OnStartLocalPlayer()
-	{
+
+	void Awake() {
 		anim = GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody> ();
-		//Vector3 explosionPos = new Vector3(0,0,0);
-//		Collider[] objectsInRange = Physics.OverlapSphere(explosionPos, radius);
-//		foreach (var i in objectsInRange) {
-//			Debug.Log(i.name);
-//		}
-//			transform.position;
-
-//		rb.AddExplosionForce(power, explosionPos, radius, 0, ForceMode.Impulse);
-//		Lerp
-
-
 		navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent> ();
+	}
+
+	public override void OnStartLocalPlayer()
+	{
 		Camera.main.GetComponent<CameraFollow> ().SetTarget (gameObject.transform);
 
 		var safeFloor = GameObject.FindGameObjectsWithTag ("SafeFloor")[0];
@@ -53,11 +45,7 @@ public class Movement : NetworkBehaviour {
 		Camera.main.GetComponent<CameraFollow> ().FollowTarget ();
 
 	}
-
-//	void AddForce() {
-//		rb.AddForce(, ForceMode.Impulse);
-//	}
-
+		
 	// Update is called once per frame
 	void Update() 
 	{

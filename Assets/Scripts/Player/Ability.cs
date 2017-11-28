@@ -29,22 +29,13 @@ public class Ability : NetworkBehaviour
 	public CursorMode cursorMode = CursorMode.Auto;
 	public Vector2 hotSpot = Vector2.zero;
 
-
-	// This [Command] code is called on the Client …
-	// … but it is run on the Server!
 	[Command]
 	void CmdShootFireball(Vector3 ballPosition, Quaternion ballRotation) {
-		
-		//		var gotoRotation = Quaternion.FromToRotation(transform.rotation, hit.
-
 		var fireball = (GameObject)Instantiate (
 			FireballPrefab,
 			ballPosition,
 			ballRotation);
 		
-
-		//		Quaternion.RotateTowards
-		// Add velocity to the bullet
 		fireball.GetComponent<Rigidbody>().velocity = fireball.transform.forward.normalized * 8;
 		NetworkServer.Spawn(fireball);
 		// Destroy the bullet after 2 seconds
@@ -59,7 +50,7 @@ public class Ability : NetworkBehaviour
 			ballRotation);
 		
 //		putball.GetComponent<ParticleSystem>().startRotation3D = SkillSpawn.rotation;
-		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 3;
+		putball.GetComponent<Rigidbody>().velocity = putball.transform.forward.normalized * 4;
 
 		NetworkServer.Spawn(putball);
 		Destroy(putball, 8.0f);
