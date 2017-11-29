@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 22488586}
   - component: {fileID: 22221880}
   - component: {fileID: 11478224}
-  - component: {fileID: 114111681021824518}
+  - component: {fileID: 114489548700026574}
   m_Layer: 5
   m_Name: ServerListPanel
   m_TagString: Untagged
@@ -534,8 +534,8 @@ GameObject:
   m_Component:
   - component: {fileID: 22442386}
   - component: {fileID: 11438560}
-  - component: {fileID: 222370631997899706}
-  - component: {fileID: 114540149851085042}
+  - component: {fileID: 222862356391169808}
+  - component: {fileID: 114212020523516708}
   m_Layer: 5
   m_Name: MainPanel
   m_TagString: Untagged
@@ -830,7 +830,7 @@ GameObject:
   - component: {fileID: 22443498}
   - component: {fileID: 22249058}
   - component: {fileID: 11499846}
-  - component: {fileID: 114010892839016564}
+  - component: {fileID: 114370445113190390}
   m_Layer: 5
   m_Name: LobbyPanel
   m_TagString: Untagged
@@ -1912,7 +1912,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isInGame: 0
   isAllowEsc: 1
-  Background: {fileID: 0}
 --- !u!114 &11426276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3180,7 +3179,9 @@ MonoBehaviour:
   m_PlayerSpawnMethod: 0
   m_OfflineScene: MagicLobbyManager
   m_OnlineScene: 
-  m_SpawnPrefabs: []
+  m_SpawnPrefabs:
+  - {fileID: 1059758851325416, guid: 2185f510f59d24b3db9c131feff0687b, type: 2}
+  - {fileID: 1398007142293884, guid: aace3a0fd193945f29c734989612fa2d, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -5673,59 +5674,7 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 155310}
   m_IsPrefabParent: 1
---- !u!114 &114010892839016564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 178410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 0747df86d598e49bb8e8a5dc6c1b7ff3, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!114 &114111681021824518
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 140634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 0747df86d598e49bb8e8a5dc6c1b7ff3, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!114 &114540149851085042
+--- !u!114 &114212020523516708
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -5751,7 +5700,59 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!222 &222370631997899706
+--- !u!114 &114370445113190390
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 0747df86d598e49bb8e8a5dc6c1b7ff3, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!114 &114489548700026574
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 140634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 0747df86d598e49bb8e8a5dc6c1b7ff3, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &222862356391169808
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
